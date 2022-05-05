@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "149242400249",
+    "firebase_url": "https://autoserviser-app-53606-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "autoserviser-app-53606",
+    "storage_bucket": "autoserviser-app-53606.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149242400249:android:2dbc549ac1fcaeaa130128",
+        "android_client_info": {
+          "package_name": "com.example.testapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "149242400249-h8r0pl9ifg0bhs5h5nj7viit29opubjj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRlMlQrpol6pA4eqIgSyp-OfqC8T1y1E4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "149242400249-h8r0pl9ifg0bhs5h5nj7viit29opubjj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">AutoServiser</string>
+    <string name="login">Prijava</string>
+    <string name="register">Registracija</string>
+    <string name="password">Lozinka</string>
+    <string name="e_mail">E-mail</string>
+    <string name="your_name">Ime</string>
+    <string name="your_surname">Prezime</string>
+    <string name="re_type_password">Ponovno unesi lozinku</string>
+    <string name="home">Home</string>
+    <string name="location">Lokacija</string>
+    <string name="profile">Profil</string>
+
+    <string name="swipe_left_for_register">Prijeđite prstom ulijevo za registraciju</string>
+    <string name="swipe_right_for_login">Prijeđite prstom udesno za prijavu</string>
+    <string name="tag">Let\'s join us and \nBuild your relationship with others</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
