@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_shade_1"
+    android:orientation="vertical"
+    tools:context=".activities.EditProfileActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Uredi profil"
+        android:textColor="@color/yellow"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        android:layout_marginTop="100dp">
+    </TextView>
+
+    <EditText
+        android:id="@+id/etIme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/your_name"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textCursorDrawable="@color/white"
+        android:backgroundTint="@color/white"
+        android:layout_margin="4dp"
+        android:drawablePadding="7dp"
+        android:drawableLeft="@drawable/ic_user">
+    </EditText>
+
+    <EditText
+        android:id="@+id/etPrezime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/your_surname"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textCursorDrawable="@color/white"
+        android:backgroundTint="@color/white"
+        android:layout_margin="4dp"
+        android:drawablePadding="7dp"
+        android:drawableLeft="@drawable/ic_user">
+    </EditText>
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/e_mail"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textCursorDrawable="@color/white"
+        android:backgroundTint="@color/white"
+        android:layout_margin="4dp"
+        android:drawablePadding="7dp"
+        android:drawableLeft="@drawable/ic_email">
+    </EditText>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSpremiProfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btn_custom"
+        android:text="@string/saveProfile"
+        android:textColor="@android:color/black" />
+
+</LinearLayout>

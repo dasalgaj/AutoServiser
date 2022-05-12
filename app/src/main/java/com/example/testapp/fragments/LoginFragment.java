@@ -18,12 +18,18 @@ import android.widget.Toast;
 import com.example.testapp.R;
 import com.example.testapp.activities.HomeActivity;
 import com.example.testapp.listeners.LoginListener;
+import com.example.testapp.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginFragment extends Fragment {
 
@@ -33,7 +39,7 @@ public class LoginFragment extends Fragment {
     EditText mLozinka;
     Button mBtnLogin;
 
-    DatabaseReference mRef;
+    DatabaseReference mDatabase;
     FirebaseAuth auth;
 
     public LoginListener loginListener;
@@ -56,7 +62,7 @@ public class LoginFragment extends Fragment {
         mBtnLogin = view.findViewById(R.id.btn_login);
 
         //DATABASE
-        mRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         auth = FirebaseAuth.getInstance();
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +102,7 @@ public class LoginFragment extends Fragment {
 
                         }
                         else{
-                            Toast.makeText(getContext(), "Prijava neuspjesna, pokusajte ponovno", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Neispravan email ili lozinka", Toast.LENGTH_SHORT).show();
                         }
 
                     }

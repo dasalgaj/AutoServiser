@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentProfil"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -8,9 +9,70 @@
     tools:context=".fragments.ProfileFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="ProfileFragment"
-        android:textColor="@color/yellow"/>
+        android:id="@+id/tvProfileTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:padding="4dp"
+        android:layout_centerHorizontal="true"
+        android:text="Moj profil"
+        android:textSize="30sp"
+        android:textColor="@color/yellow"
+        android:fontFamily="sans-serif-medium">
+    </TextView>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvProfileTitle"
+        android:layout_marginLeft="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:padding="4dp"
+        android:text="Ime:"
+        android:textColor="@color/white"
+        android:textSize="22sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tvSurname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:padding="4dp"
+        android:text="Prezime:"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:fontFamily="sans-serif-medium"
+        android:layout_below="@id/tvName">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:padding="4dp"
+        android:text="E-mail:"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:fontFamily="sans-serif-medium"
+        android:layout_below="@id/tvSurname">
+    </TextView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnEditProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btn_custom"
+        android:text="@string/editProfile"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/tvEmail" />
+
+</RelativeLayout>
