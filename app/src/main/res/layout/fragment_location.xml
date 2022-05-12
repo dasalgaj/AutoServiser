@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentProfil"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/black_shade_1"
-    tools:context=".fragments.LocationFragment">
+    tools:context=".fragments.ProfileFragment">
 
     <TextView
         android:id="@+id/tvLocationTitle"
@@ -20,5 +21,15 @@
         android:textColor="@color/yellow"
         android:fontFamily="sans-serif-medium">
     </TextView>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_centerHorizontal="true"
+        tools:context=".fragments.LocationFragment"
+        android:layout_below="@+id/tvLocationTitle"/>
 
 </RelativeLayout>

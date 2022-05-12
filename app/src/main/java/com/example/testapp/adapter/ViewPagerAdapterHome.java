@@ -8,9 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.testapp.fragments.HomeFragment;
 import com.example.testapp.fragments.LocationFragment;
-import com.example.testapp.fragments.LoginFragment;
 import com.example.testapp.fragments.ProfileFragment;
-import com.example.testapp.fragments.RegisterFragment;
 import com.example.testapp.listeners.LoginListener;
 
 public class ViewPagerAdapterHome extends FragmentStateAdapter implements LoginListener {
