@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.testapp.R;
+import com.example.testapp.models.CustomTimePickerDialog;
 import com.example.testapp.models.Servis;
 
 import java.text.ParseException;
@@ -83,39 +85,18 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
         mBtnVrijeme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        RezervacijaActivity.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                t1hour = hourOfDay;
-                                t1minute = 00;
-
-                                String time = t1hour + ":" + t1minute;
-
-                                SimpleDateFormat f24Hours = new SimpleDateFormat(
-                                        "HH:mm"
-                                );
-
-                                try {
-                                    Date date = f24Hours.parse(time);
-                                    SimpleDateFormat f12hours = new SimpleDateFormat(
-                                            "HH:mm aa"
-                                    );
-                                    tvVrijeme.setText(f12hours.format(date));
-                                }
-                                catch(ParseException e){
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, 12, 0, false
-                );
-                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                timePickerDialog.updateTime(t1hour, t1minute);
-
-                timePickerDialog.show();
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                CustomTimePickerDialog mTimePicker;
+                mTimePicker = new CustomTimePickerDialog(RezervacijaActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        tvVrijeme.setText( selectedHour + ":0" + selectedMinute);
+                    }
+                }, hour, minute, false);
+                mTimePicker.setTitle("Odaberi vrijeme");
+                mTimePicker.show();
             }
         });
 
