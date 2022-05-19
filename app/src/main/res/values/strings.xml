@@ -10,8 +10,15 @@
     <string name="home">Naslovnica</string>
     <string name="location">Lokacija</string>
     <string name="profile">Profil</string>
+    <string name="obavljeno">Obavljeno</string>
     <string name="editProfile">Uredi profil</string>
     <string name="saveProfile">Spremi profil</string>
+    
+    <string-array name="tipoviServisa">
+        <item>Mali servis</item>
+        <item>Veliki servis</item>
+        <item>Servis guma</item>
+    </string-array>
 
     <string name="swipe_left_for_register">Prijeđite prstom ulijevo za registraciju</string>
     <string name="swipe_right_for_login">Prijeđite prstom udesno za prijavu</string>

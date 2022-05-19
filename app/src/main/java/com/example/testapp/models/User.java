@@ -3,6 +3,7 @@ package com.example.testapp.models;
 public class User {
 
     public int servisID;
+    public String type;
     public String ime;
     public String prezime;
     public String email;
@@ -12,8 +13,9 @@ public class User {
 
     }
 
-    public User(int servisID, String ime, String prezime, String email, String password) {
+    public User(int servisID, String type, String ime, String prezime, String email, String password) {
         this.servisID = servisID;
+        this.type = type;
         this.ime = ime;
         this.prezime = prezime;
         this.email = email;
@@ -25,7 +27,11 @@ public class User {
         this.servisID = servisID;
     }
 
-    public void setName(String ime) {
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setIme(String ime) {
         this.ime = ime;
     }
 
@@ -44,6 +50,10 @@ public class User {
     //GETTER
     public int getServisID() {
         return servisID;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getIme() {

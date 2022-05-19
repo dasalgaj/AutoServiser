@@ -154,7 +154,7 @@ public class EditProfileActivity extends AppCompatActivity {
         user.updateEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(EditProfileActivity.this, "Uspjesno promijenjeno", Toast.LENGTH_SHORT).show();
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

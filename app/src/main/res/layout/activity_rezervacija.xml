@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black_shade_1"
+    tools:context=".activities.RezervacijaActivity">
+
+    <TextView
+        android:id="@+id/tvAutoServis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-medium"
+        android:padding="4dp"
+        android:text="Auto servis"
+        android:textColor="@color/yellow"
+        android:textSize="30sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tvOdaberiTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:padding="4dp"
+        android:text="Odaberi tip servisa:"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:fontFamily="sans-serif-medium"
+        android:layout_below="@id/tvAutoServis">
+    </TextView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_below="@+id/tvOdaberiTip"
+        android:layout_marginStart="14dp"
+        app:boxBackgroundColor="@color/yellow">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Tip servisa"
+            android:textColor="@color/black"
+            android:inputType="none">
+        </AutoCompleteTextView>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvOdaberiDatum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textInputLayout"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-medium"
+        android:padding="4dp"
+        android:text="Odaberi datum servisa:"
+        android:textColor="@color/white"
+        android:textSize="22sp">
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvOdaberiDatum"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnOdaberiDatum"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:backgroundTint="@color/yellow"
+            android:text="Datum"
+            android:textColor="@color/black">
+        </Button>
+
+        <TextView
+            android:id="@+id/tvDatum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:textColor="@color/white"
+            android:textSize="20sp">
+        </TextView>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvOdaberiVrijeme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayout"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-medium"
+        android:padding="4dp"
+        android:text="Odaberi vrijeme servisa:"
+        android:textColor="@color/white"
+        android:textSize="22sp">
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvOdaberiVrijeme">
+
+        <Button
+            android:id="@+id/btnOdaberiVrijeme"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:backgroundTint="@color/yellow"
+            android:text="Vrijeme"
+            android:textColor="@color/black">
+        </Button>
+
+        <TextView
+            android:id="@+id/tvVrijeme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:textColor="@color/white"
+            android:textSize="20sp">
+        </TextView>
+
+    </LinearLayout>
+
+</RelativeLayout>

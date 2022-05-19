@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.testapp.R;
 import com.example.testapp.activities.HomeActivity;
+import com.example.testapp.activities.HomeActivityServiser;
 import com.example.testapp.listeners.LoginListener;
 import com.example.testapp.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +32,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginFragment extends Fragment {
 
@@ -91,6 +96,7 @@ public class LoginFragment extends Fragment {
             return;
         }
 
+
         auth.signInWithEmailAndPassword(email, lozinka)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -98,7 +104,7 @@ public class LoginFragment extends Fragment {
 
                         if (task.isSuccessful()){
 
-                            startActivity(new Intent(getContext(), HomeActivity.class));
+                            verifyUserType();
 
                         }
                         else{
@@ -107,5 +113,29 @@ public class LoginFragment extends Fragment {
 
                     }
                 });
+
+    }
+
+    private void verifyUserType(){
+
+        mDatabase.child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String userType = snapshot.child("type").getValue(String.class);
+
+                if (userType != null && userType.equals("korisnik")){
+                    startActivity(new Intent(getContext(), HomeActivity.class));
+                }
+                else{
+                    startActivity(new Intent(getContext(), HomeActivityServiser.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }

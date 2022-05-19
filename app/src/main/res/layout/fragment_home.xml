@@ -49,13 +49,33 @@
                     android:background="@drawable/bg1"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginEnd="30dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="30dp">
+
+                        <Button
+                            android:id="@+id/btnRezervacijaOpel"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/ic_add"
+                            android:layout_below="@id/tvRezervacija1">
+                        </Button>
+
+                        <TextView
+                            android:id="@+id/tvRezervacija1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="12dp"
+                            android:text="Rezervacija"
+                            android:textColor="@color/black">
+                        </TextView>
+
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -78,13 +98,12 @@
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="30dp"
                         android:orientation="vertical">
 
@@ -152,13 +171,33 @@
                     android:background="@drawable/bg1"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="30dp"
                         android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnRezervacijaNissan"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvRezervacija2"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/ic_add">
+                        </Button>
+
+                        <TextView
+                            android:id="@+id/tvRezervacija2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rezervacija"
+                            android:textColor="@color/black"
+                            android:layout_marginRight="12dp"
+                            android:layout_alignParentEnd="true">
+                        </TextView>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -181,13 +220,12 @@
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="30dp"
                         android:orientation="vertical">
 
@@ -255,13 +293,33 @@
                     android:background="@drawable/bg1"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="30dp"
                         android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnRezervacijaCitroen"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvRezervacija3"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/ic_add">
+                        </Button>
+
+                        <TextView
+                            android:id="@+id/tvRezervacija3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rezervacija"
+                            android:textColor="@color/black"
+                            android:layout_marginRight="12dp"
+                            android:layout_alignParentEnd="true">
+                        </TextView>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -284,13 +342,12 @@
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="30dp"
                         android:orientation="vertical">
 
@@ -358,13 +415,33 @@
                     android:background="@drawable/bg1"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="30dp"
                         android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnRezervacijaRenault"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvRezervacija4"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/ic_add">
+                        </Button>
+
+                        <TextView
+                            android:id="@+id/tvRezervacija4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rezervacija"
+                            android:textColor="@color/black"
+                            android:layout_marginRight="12dp"
+                            android:layout_alignParentEnd="true">
+                        </TextView>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -381,19 +458,18 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Ul. Josipa Jurja Strossmayera 188"
+                                android:text="Ul. Josipa Jurja\nStrossmayera 188"
                                 android:textColor="#000000"
                                 android:textSize="14sp" />
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="30dp"
                         android:orientation="vertical">
 

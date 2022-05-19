@@ -119,7 +119,7 @@ public class RegisterFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()){
-                            User oUser = new User(0, ime, prezime, email, lozinka);
+                            User oUser = new User(0, "korisnik", ime, prezime, email, lozinka);
 
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())

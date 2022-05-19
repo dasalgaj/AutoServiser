@@ -7,10 +7,15 @@
         <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/drawable/btn_custom.xml" value="0.375" />
         <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/activity_edit_profile.xml" value="0.25" />
         <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/activity_home.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/activity_home_serviser.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/activity_main.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/activity_rezervacija.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/dropdown_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/fragment_home_serviser.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/fragment_location.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/fragment_login.xml" value="0.25" />
+        <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/fragment_obavljeno_serviser.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/dasal/AndroidStudioProjects/AutoServiser/app/src/main/res/layout/fragment_register.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/dasal/AndroidStudioProjects/Testapp/app/src/main/res/drawable/btn_custom.xml" value="0.3769230769230769" />
