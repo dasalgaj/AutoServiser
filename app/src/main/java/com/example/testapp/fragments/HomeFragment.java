@@ -7,10 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testapp.R;
@@ -18,8 +20,11 @@ import com.example.testapp.activities.HomeActivity;
 import com.example.testapp.activities.HomeActivityServiser;
 import com.example.testapp.activities.RezervacijaActivity;
 import com.example.testapp.listeners.LoginListener;
+import com.example.testapp.models.Rezervacija;
 import com.example.testapp.models.Servis;
+import com.example.testapp.models.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,21 +38,104 @@ public class HomeFragment extends Fragment {
 
     private View view;
 
+    TextView tvOpel, tvNissan, tvCitroen, tvRenault;
     Button btnRezervacijaOpel;
     Button btnRezervacijaNissan;
     Button btnRezervacijaCitroen;
     Button btnRezervacijaRenault;
 
-    DatabaseReference mDatabase;
+    DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference("Users");
+    DatabaseReference mDatabaseServisi;
+    DatabaseReference mDatabaseRezervacije = FirebaseDatabase.getInstance().getReference("Rezervacije");
+    FirebaseUser userFirebase;
     FirebaseAuth auth;
 
     List<Servis> servisi = new ArrayList<>();
+
+    String userID;
 
     public LoginListener loginListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (mDatabaseRezervacije != null) {
+
+            userFirebase = FirebaseAuth.getInstance().getCurrentUser();
+            userID = userFirebase.getUid();
+
+            mDatabaseUsers.child(userID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshotUsers) {
+
+                    if (snapshotUsers.exists()) {
+
+                        User userProfile = snapshotUsers.getValue(User.class);
+
+                        if (userProfile != null){
+
+                            mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshotRezervacije) {
+
+                                    if (snapshotRezervacije.exists()) {
+
+                                        for (DataSnapshot dsRezervacije : snapshotRezervacije.getChildren()){
+
+                                            if (userProfile.rezervacijaID == dsRezervacije.child("rezervacijaID").getValue(Long.class)){
+
+                                                if (dsRezervacije.child("servisID").getValue(int.class) == 1){
+
+                                                    tvNissan.setText("Na čekanju");
+                                                    tvNissan.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                                                    btnRezervacijaNissan.setVisibility(View.INVISIBLE);
+
+                                                }
+                                                else if (dsRezervacije.child("servisID").getValue(int.class) == 2){
+
+                                                    tvCitroen.setText("Na čekanju");
+                                                    btnRezervacijaCitroen.setVisibility(View.INVISIBLE);
+
+                                                }
+                                                else if (dsRezervacije.child("servisID").getValue(int.class) == 3){
+
+                                                    tvRenault.setText("Na čekanju");
+                                                    btnRezervacijaRenault.setVisibility(View.INVISIBLE);
+
+                                                }
+                                                else if (dsRezervacije.child("servisID").getValue(int.class) == 4){
+
+                                                    tvOpel.setText("Na čekanju");
+                                                    btnRezervacijaOpel.setVisibility(View.INVISIBLE);
+
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -61,11 +149,17 @@ public class HomeFragment extends Fragment {
         btnRezervacijaCitroen = view.findViewById(R.id.btnRezervacijaCitroen);
         btnRezervacijaRenault = view.findViewById(R.id.btnRezervacijaRenault);
 
+        //TEXT VIEW
+        tvOpel = view.findViewById(R.id.tvRezervacija1);
+        tvNissan = view.findViewById(R.id.tvRezervacija2);
+        tvCitroen = view.findViewById(R.id.tvRezervacija3);
+        tvRenault = view.findViewById(R.id.tvRezervacija4);
+
         //DATABASE
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Servisi");
+        mDatabaseServisi = FirebaseDatabase.getInstance().getReference().child("Servisi");
         auth = FirebaseAuth.getInstance();
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabaseServisi.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

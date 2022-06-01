@@ -10,11 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.testapp.R;
+import com.example.testapp.adapter.CekanjeRVAdapter;
 import com.example.testapp.adapter.RezervacijeRVAdapter;
 import com.example.testapp.listeners.LoginListener;
 import com.example.testapp.models.Rezervacija;
@@ -28,18 +27,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-public class HomeFragmentServiser extends Fragment {
+public class CekanjeFragmentServiser extends Fragment {
 
     private View view;
 
-    TextView tvEmpty;
+    TextView tvEmptyCekanje;
     RecyclerView mRecyclerView;
-    RezervacijeRVAdapter rezervacijeAdapter;
+    CekanjeRVAdapter rezervacijeAdapter;
 
     DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference("Users");
+    DatabaseReference mDatabaseServisi;
     DatabaseReference mDatabaseRezervacije = FirebaseDatabase.getInstance().getReference("Rezervacije");
     FirebaseUser userFirebase;
 
@@ -56,13 +54,13 @@ public class HomeFragmentServiser extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home_serviser, container, false);
+        view = inflater.inflate(R.layout.fragment_cekanje_serviser, container, false);
 
         //TEXT VIEWS
-        tvEmpty = view.findViewById(R.id.tvEmpty);
+        tvEmptyCekanje = view.findViewById(R.id.tvEmptyCekanje);
 
         //RECYCLER VIEW
-        mRecyclerView = view.findViewById(R.id.recyclerViewRezervacije);
+        mRecyclerView = view.findViewById(R.id.recyclerViewCekanje);
 
         if (mDatabaseRezervacije != null){
 
@@ -87,22 +85,22 @@ public class HomeFragmentServiser extends Fragment {
 
                                         rezervacije.clear();
 
-                                        //RV Rezervacije
-                                        rezervacijeAdapter = new RezervacijeRVAdapter(rezervacije, getContext());
+                                        //RV RezervacijeCekanje
+                                        rezervacijeAdapter = new CekanjeRVAdapter(rezervacije, getContext());
 
                                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                         mRecyclerView.setAdapter(rezervacijeAdapter);
 
                                         for (DataSnapshot dsRezervacije : snapshotRezervacije.getChildren()){
 
-                                            if (userProfile.servisID == dsRezervacije.child("servisID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("Na cekanju")){
+                                            if (userProfile.servisID == dsRezervacije.child("servisID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("U tijeku")){
 
                                                 Rezervacija rezervacija = dsRezervacije.getValue(Rezervacija.class);
 
                                                 rezervacije.add(rezervacija);
 
-                                                //RV Rezervacije
-                                                rezervacijeAdapter = new RezervacijeRVAdapter(rezervacije, getContext());
+                                                //RV RezervacijeCekanje
+                                                rezervacijeAdapter = new CekanjeRVAdapter(rezervacije, getContext());
 
                                                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                                 mRecyclerView.setAdapter(rezervacijeAdapter);
@@ -112,7 +110,10 @@ public class HomeFragmentServiser extends Fragment {
                                         }
 
                                         if (rezervacijeAdapter.getItemCount() == 0){
-                                            tvEmpty.setText("Trenutno nemate rezervacija");
+                                            tvEmptyCekanje.setText("Trenutno nema rezervacija u tijeku");
+                                        }
+                                        else{
+                                            tvEmptyCekanje.setVisibility(View.INVISIBLE);
                                         }
 
                                     }

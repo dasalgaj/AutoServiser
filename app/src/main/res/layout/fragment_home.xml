@@ -22,7 +22,7 @@
                 android:id="@+id/tvHomeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-medium"
                 android:padding="4dp"
@@ -36,7 +36,6 @@
                 android:id="@+id/cardView1"
                 android:layout_width="match_parent"
                 android:layout_height="173dp"
-                android:layout_below="@+id/tvHomeTitle"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
@@ -60,10 +59,10 @@
                             android:id="@+id/btnRezervacijaOpel"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
+                            android:layout_below="@id/tvRezervacija1"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginRight="16dp"
-                            android:background="@drawable/ic_add"
-                            android:layout_below="@id/tvRezervacija1">
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/ic_add">
                         </Button>
 
                         <TextView
@@ -71,7 +70,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginRight="12dp"
+                            android:layout_marginEnd="12dp"
                             android:text="Rezervacija"
                             android:textColor="@color/black">
                         </TextView>
@@ -185,7 +184,7 @@
                             android:layout_height="60dp"
                             android:layout_below="@id/tvRezervacija2"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginRight="16dp"
+                            android:layout_marginEnd="16dp"
                             android:background="@drawable/ic_add">
                         </Button>
 
@@ -195,7 +194,7 @@
                             android:layout_height="wrap_content"
                             android:text="Rezervacija"
                             android:textColor="@color/black"
-                            android:layout_marginRight="12dp"
+                            android:layout_marginEnd="12dp"
                             android:layout_alignParentEnd="true">
                         </TextView>
 
@@ -307,7 +306,7 @@
                             android:layout_height="60dp"
                             android:layout_below="@id/tvRezervacija3"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginRight="16dp"
+                            android:layout_marginEnd="16dp"
                             android:background="@drawable/ic_add">
                         </Button>
 
@@ -317,7 +316,7 @@
                             android:layout_height="wrap_content"
                             android:text="Rezervacija"
                             android:textColor="@color/black"
-                            android:layout_marginRight="12dp"
+                            android:layout_marginEnd="12dp"
                             android:layout_alignParentEnd="true">
                         </TextView>
 
@@ -429,7 +428,7 @@
                             android:layout_height="60dp"
                             android:layout_below="@id/tvRezervacija4"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginRight="16dp"
+                            android:layout_marginEnd="16dp"
                             android:background="@drawable/ic_add">
                         </Button>
 
@@ -439,7 +438,7 @@
                             android:layout_height="wrap_content"
                             android:text="Rezervacija"
                             android:textColor="@color/black"
-                            android:layout_marginRight="12dp"
+                            android:layout_marginEnd="12dp"
                             android:layout_alignParentEnd="true">
                         </TextView>
 

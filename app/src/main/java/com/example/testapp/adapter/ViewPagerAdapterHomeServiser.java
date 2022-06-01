@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.testapp.fragments.CekanjeFragmentServiser;
 import com.example.testapp.fragments.HomeFragmentServiser;
 import com.example.testapp.fragments.LocationFragment;
 import com.example.testapp.fragments.ObavljenoFragmentServiser;
@@ -29,10 +30,14 @@ public class ViewPagerAdapterHomeServiser extends FragmentStateAdapter implement
         switch (position)
         {
             case 1:
+                fragment = new CekanjeFragmentServiser();
+                ((CekanjeFragmentServiser)fragment).loginListener = this;
+                break;
+            case 2:
                 fragment = new ObavljenoFragmentServiser();
                 ((ObavljenoFragmentServiser)fragment).loginListener = this;
                 break;
-            case 2:
+            case 3:
                 fragment = new ProfileFragment();
                 ((ProfileFragment)fragment).loginListener = this;
                 break;
@@ -47,7 +52,7 @@ public class ViewPagerAdapterHomeServiser extends FragmentStateAdapter implement
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 
     @Override

@@ -3,28 +3,36 @@ package com.example.testapp.models;
 public class User {
 
     public int servisID;
+    public long rezervacijaID;
     public String type;
     public String ime;
     public String prezime;
     public String email;
+    public String mobitel;
     public String password;
 
     public User(){
 
     }
 
-    public User(int servisID, String type, String ime, String prezime, String email, String password) {
+    public User(int servisID, long rezervacijaID, String type, String ime, String prezime, String email, String mobitel, String password) {
         this.servisID = servisID;
+        this.rezervacijaID = rezervacijaID;
         this.type = type;
         this.ime = ime;
         this.prezime = prezime;
         this.email = email;
+        this.mobitel = mobitel;
         this.password = password;
     }
 
     //SETTER
     public void setServisID(int servisID) {
         this.servisID = servisID;
+    }
+
+    public void setRezervacijaID(long rezervacijaID) {
+        this.rezervacijaID = rezervacijaID;
     }
 
     public void setType(String type) {
@@ -43,6 +51,10 @@ public class User {
         this.email = email;
     }
 
+    public void setMobitel(String mobitel) {
+        this.mobitel = mobitel;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -50,6 +62,10 @@ public class User {
     //GETTER
     public int getServisID() {
         return servisID;
+    }
+
+    public long getRezervacijaID() {
+        return rezervacijaID;
     }
 
     public String getType() {
@@ -66,6 +82,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getMobitel() {
+        return mobitel;
     }
 
     public String getPassword() {

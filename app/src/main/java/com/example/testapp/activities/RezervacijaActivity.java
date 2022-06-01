@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -34,15 +35,21 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
     TextView tvAutoServis;
     TextView tvDatum;
     TextView tvVrijeme;
+    Button mBtnDalje;
     Button mBtnDatum;
     Button mBtnVrijeme;
     AutoCompleteTextView autoCompleteTextView;
 
-    int t1hour, t1minute;
+    String tipServisa;
+    String datumServisa;
+    String vrijemeServisa;
+    String adresaServisa;
+    String imeServisa;
+    int servisID;
 
     ArrayAdapter<String> adapterItems;
 
-    String[] tipoviServisa = new String[]{"Mali servis", "Veliki servis", "Servis guma"};
+    String[] tipoviServisa = new String[]{"Mali servis", "Veliki servis"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,7 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
         //BUTTONS
         mBtnDatum = findViewById(R.id.btnOdaberiDatum);
         mBtnVrijeme = findViewById(R.id.btnOdaberiVrijeme);
+        mBtnDalje = findViewById(R.id.btnRezervacijaDalje);
 
         //AUTOCOMPLETE TEXT VIEW
         autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
@@ -75,6 +83,34 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
             }
         });
 
+        //DALJE NA POTVRDU REZERVACIJE
+        mBtnDalje.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (autoCompleteTextView.getText().toString().equals("Tip servisa") || tvDatum.getText().toString().isEmpty() || tvVrijeme.getText().toString().isEmpty()){
+                    Toast.makeText(RezervacijaActivity.this, "Morate popuniti sve podatke", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                tipServisa = autoCompleteTextView.getText().toString();
+                datumServisa = tvDatum.getText().toString();
+                vrijemeServisa = tvVrijeme.getText().toString();
+                adresaServisa = servis.adresa;
+                imeServisa = servis.ime;
+                servisID = servis.servisID;
+
+                Intent i = new Intent(RezervacijaActivity.this, PotvrdaRezervacijeActivity.class);
+                i.putExtra("tip", tipServisa);
+                i.putExtra("datum", datumServisa);
+                i.putExtra("vrijeme", vrijemeServisa);
+                i.putExtra("adresa", adresaServisa);
+                i.putExtra("imeServisa", imeServisa);
+                i.putExtra("servisID", servisID);
+                startActivity(i);
+            }
+        });
+
+        //POSTAVI DATUM
         mBtnDatum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +118,7 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
             }
         });
 
+        //POSTAVI VRIJEME
         mBtnVrijeme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +147,33 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         );
+
+        //MIN DATUM
+        final Calendar c = Calendar.getInstance();
+
+        int yearMIN = c.get(Calendar.YEAR);
+        int monthMIN = c.get(Calendar.MONTH);
+        int dayMIN = c.get(Calendar.DAY_OF_MONTH);
+
+        Calendar minDate = Calendar.getInstance();
+        minDate.set(Calendar.DAY_OF_MONTH, dayMIN + 1);
+        minDate.set(Calendar.MONTH, monthMIN);
+        minDate.set(Calendar.YEAR, yearMIN);
+
+        //MAX DATUM
+        int yearMAX = c.get(Calendar.YEAR);
+        int monthMAX = c.get(Calendar.MONTH);
+        int dayMAX = c.get(Calendar.DAY_OF_MONTH);
+
+        Calendar maxDate = Calendar.getInstance();
+        maxDate.set(Calendar.DAY_OF_MONTH, dayMAX);
+        maxDate.set(Calendar.MONTH, monthMAX);
+        maxDate.set(Calendar.YEAR, yearMAX + 1);
+
+        //MIN, MAX DATUM
+        datePickerDialog.getDatePicker().setMinDate(minDate.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
+
         datePickerDialog.show();
     }
 

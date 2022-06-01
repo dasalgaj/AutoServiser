@@ -26,7 +26,7 @@ public class HomeActivityServiser extends AppCompatActivity {
         mViewPager = findViewById(R.id.viewPagerHome2);
 
         //TAB LAYOUT
-        mTabLayout = findViewById(R.id.tabLayout);
+        mTabLayout = findViewById(R.id.tabLayoutServiser);
 
         adapter = new ViewPagerAdapterHomeServiser(getSupportFragmentManager(), getLifecycle());
         mViewPager.setAdapter(adapter);

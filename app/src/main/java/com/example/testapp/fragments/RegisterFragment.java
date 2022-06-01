@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.testapp.R;
+import com.example.testapp.activities.MainActivity;
 import com.example.testapp.listeners.LoginListener;
 import com.example.testapp.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,8 +23,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -34,11 +38,14 @@ public class RegisterFragment extends Fragment {
     EditText mIme;
     EditText mPrezime;
     EditText mEmail;
+    EditText mMobitel;
     EditText mLozinka;
     Button mBtnRegister;
 
     FirebaseAuth auth;
-    DatabaseReference mRef;
+    DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users");
+
+    long count;
 
     public LoginListener loginListener;
 
@@ -57,6 +64,7 @@ public class RegisterFragment extends Fragment {
         mPrezime = view.findViewById(R.id.et_surnameRegister);
         mEmail = view.findViewById(R.id.et_emailRegister);
         mLozinka = view.findViewById(R.id.et_passwordRegister);
+        mMobitel = view.findViewById(R.id.et_mobitelRegister);
 
         //BUTTONS
         mBtnRegister = view.findViewById(R.id.btn_register);
@@ -82,6 +90,7 @@ public class RegisterFragment extends Fragment {
         String prezime = mPrezime.getText().toString();
         String email = mEmail.getText().toString();
         String lozinka = mLozinka.getText().toString();
+        String mobitel = mMobitel.getText().toString();
 
         if (ime.isEmpty()){
             mIme.setError("Ime je obavezno!");
@@ -103,6 +112,11 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
+        if (mobitel.isEmpty()){
+            mMobitel.setError("Mobitel je obavezan!");
+            return;
+        }
+
         if (lozinka.isEmpty()){
             mLozinka.setError("Lozinka je obavezna!");
             return;
@@ -113,13 +127,27 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    count = (snapshot.getChildrenCount());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         auth.createUserWithEmailAndPassword(email, lozinka)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()){
-                            User oUser = new User(0, "korisnik", ime, prezime, email, lozinka);
+                            User oUser = new User(0, count + 1, "korisnik", ime, prezime, email, mobitel, lozinka);
 
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -142,7 +170,7 @@ public class RegisterFragment extends Fragment {
                             });
                         }
                         else{
-                            Toast.makeText(getContext(), "Registracija nije uspjela", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
                     }

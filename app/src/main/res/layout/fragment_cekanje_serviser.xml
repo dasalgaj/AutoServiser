@@ -6,23 +6,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/black_shade_1"
-    tools:context=".fragments.HomeFragmentServiser">
+    tools:context=".fragments.CekanjeFragmentServiser">
+
 
     <TextView
-        android:id="@+id/tvHomeServiserTitle"
+        android:id="@+id/tvCekanje"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-medium"
         android:padding="4dp"
-        android:text="@string/app_name"
+        android:text="@string/cekanje"
         android:textColor="@color/yellow"
         android:textSize="30sp">
     </TextView>
 
     <TextView
-        android:id="@+id/tvEmpty"
+        android:id="@+id/tvEmptyCekanje"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/yellow"
@@ -31,14 +32,14 @@
     </TextView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewRezervacije"
+        android:id="@+id/recyclerViewCekanje"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvHomeServiserTitle"
+        android:layout_below="@+id/tvCekanje"
         android:layout_marginTop="5dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/rezervacije_rv_item">
+        tools:listitem="@layout/cekanje_rv_item">
     </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

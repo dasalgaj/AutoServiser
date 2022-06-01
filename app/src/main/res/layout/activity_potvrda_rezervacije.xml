@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black_shade_1"
+    tools:context=".activities.PotvrdaRezervacijeActivity">
+
+    <TextView
+        android:id="@+id/tvAutoServis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-medium"
+        android:padding="4dp"
+        android:text="Potvrda rezervacije"
+        android:textColor="@color/yellow"
+        android:textSize="30sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tvPotvrdaTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAutoServis"
+        android:layout_marginStart="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:padding="4dp"
+        android:text="Tip servisa:"
+        android:textColor="@color/white"
+        android:textSize="22sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tvPotvrdaDatum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPotvrdaTip"
+        android:layout_marginStart="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:padding="4dp"
+        android:text="Datum servisa:"
+        android:textColor="@color/white"
+        android:textSize="22sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tvPotvrdaVrijeme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPotvrdaDatum"
+        android:layout_marginStart="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:padding="4dp"
+        android:text="Vrijeme servisa:"
+        android:textColor="@color/white"
+        android:textSize="22sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tvPotvrdaAdresa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPotvrdaVrijeme"
+        android:layout_marginStart="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:padding="4dp"
+        android:text="Adresa servisa:"
+        android:textColor="@color/white"
+        android:textSize="22sp">
+    </TextView>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/potvrdaMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_centerHorizontal="true"
+        tools:context=".fragments.LocationFragment"
+        android:layout_below="@+id/tvPotvrdaAdresa"/>
+
+    <Button
+        android:id="@+id/btnRezervacijaPotvrdi"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:backgroundTint="@color/yellow"
+        android:text="Potvrdi"
+        android:textColor="@color/black"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp">
+    </Button>
+
+
+</RelativeLayout>

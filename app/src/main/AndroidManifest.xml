@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AutoServiserTheme">
         <activity
+            android:name=".activities.PotvrdaRezervacijeActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.RezervacijaActivity"
             android:exported="true" />
         <activity

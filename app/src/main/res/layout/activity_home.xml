@@ -21,7 +21,9 @@
         android:layout_height="wrap_content"
         android:background="@color/black_shade_1"
         app:tabSelectedTextColor="@color/yellow"
-        app:tabTextColor="@color/white">
+        app:tabPaddingEnd="-1dp"
+        app:tabTextColor="@color/white"
+        app:tabTextAppearance="@style/TabTheme">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/home"
