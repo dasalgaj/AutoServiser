@@ -1,5 +1,6 @@
 package com.example.testapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -23,6 +24,11 @@ import android.widget.Toast;
 import com.example.testapp.R;
 import com.example.testapp.models.CustomTimePickerDialog;
 import com.example.testapp.models.Servis;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +51,10 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
     String vrijemeServisa;
     String adresaServisa;
     String imeServisa;
+    String radnoVrijeme;
     int servisID;
+
+    DatabaseReference mDatabaseRezervacije = FirebaseDatabase.getInstance().getReference("Rezervacije");
 
     ArrayAdapter<String> adapterItems;
 
@@ -98,15 +107,60 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
                 adresaServisa = servis.adresa;
                 imeServisa = servis.ime;
                 servisID = servis.servisID;
+                radnoVrijeme = servis.radnoVrijeme;
 
-                Intent i = new Intent(RezervacijaActivity.this, PotvrdaRezervacijeActivity.class);
-                i.putExtra("tip", tipServisa);
-                i.putExtra("datum", datumServisa);
-                i.putExtra("vrijeme", vrijemeServisa);
-                i.putExtra("adresa", adresaServisa);
-                i.putExtra("imeServisa", imeServisa);
-                i.putExtra("servisID", servisID);
-                startActivity(i);
+                String[] radnaVremena = radnoVrijeme.split("-");
+                radnaVremena[0] = radnaVremena[0].trim();
+                radnaVremena[1] = radnaVremena[1].trim();
+
+                mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (snapshot.exists()){
+
+                            for (DataSnapshot ds : snapshot.getChildren()){
+
+                                if (ds.child("datum").getValue(String.class).equals(datumServisa) && ds.child("vrijeme").getValue(String.class).equals(vrijemeServisa) && ds.child("servisID").getValue(Long.class) == servisID){
+
+                                    Toast.makeText(RezervacijaActivity.this, "Vrijeme je zauzeto", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else{
+
+                                    if (checkTime(radnaVremena[0], radnaVremena[1], vrijemeServisa)){
+
+                                        mDatabaseRezervacije.removeEventListener(this);
+
+                                        Intent i = new Intent(RezervacijaActivity.this, PotvrdaRezervacijeActivity.class);
+                                        i.putExtra("tip", tipServisa);
+                                        i.putExtra("datum", datumServisa);
+                                        i.putExtra("vrijeme", vrijemeServisa);
+                                        i.putExtra("adresa", adresaServisa);
+                                        i.putExtra("imeServisa", imeServisa);
+                                        i.putExtra("servisID", servisID);
+                                        startActivity(i);
+
+                                    }
+                                    else{
+
+                                        Toast.makeText(RezervacijaActivity.this, "Izvan radnog vremena", Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 
@@ -137,6 +191,43 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
             }
         });
 
+    }
+
+    private boolean checkTime(String r1, String r2, String r3){
+
+        try {
+            Date time1 = new SimpleDateFormat("HH").parse(r1);
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(time1);
+            calendar1.add(Calendar.DATE, 1);
+
+
+            Date time2 = new SimpleDateFormat("HH").parse(r2);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(time2);
+            calendar2.add(Calendar.DATE, 1);
+
+            Date d = new SimpleDateFormat("HH").parse(r3);
+            Calendar calendar3 = Calendar.getInstance();
+            calendar3.setTime(d);
+            calendar3.add(Calendar.DATE, 1);
+
+            Date x = calendar3.getTime();
+            if (x.after(calendar1.getTime()) && x.before(calendar2.getTime()) || x.equals(calendar1.getTime()) || x.equals(calendar2.getTime())) {
+
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        return false;
     }
 
     private void showDatePickerDialog(){

@@ -114,6 +114,9 @@ public class HomeFragmentServiser extends Fragment {
                                         if (rezervacijeAdapter.getItemCount() == 0){
                                             tvEmpty.setText("Trenutno nemate rezervacija");
                                         }
+                                        else{
+                                            tvEmpty.setVisibility(View.INVISIBLE);
+                                        }
 
                                     }
 

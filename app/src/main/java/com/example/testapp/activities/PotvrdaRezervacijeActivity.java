@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.protobuf.Value;
 
 public class PotvrdaRezervacijeActivity extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -43,6 +44,8 @@ public class PotvrdaRezervacijeActivity extends AppCompatActivity implements OnM
 
     String imeServisa, adresa, userID;
     long rezervacijaID;
+
+    Rezervacija rezervacija;
 
     FirebaseUser user;
     DatabaseReference mDatabaseRezervacije;
@@ -85,6 +88,26 @@ public class PotvrdaRezervacijeActivity extends AppCompatActivity implements OnM
         tvPotvrdaVrijeme.setText("Vrijeme servisa: " + vrijeme);
         tvPotvrdaAdresa.setText("Adresa servisa: " + adresa);
 
+        ValueEventListener stateValueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User userProfile = snapshot.getValue(User.class);
+
+                if (userProfile != null){
+                    rezervacijaID = userProfile.rezervacijaID;
+
+                    rezervacija = new Rezervacija(userProfile.ime, userProfile.prezime, userProfile.mobitel, tip, datum, vrijeme, adresa, "Na cekanju", servisID, rezervacijaID);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+
+
         mBtnRezervacijaPotvrdi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +120,7 @@ public class PotvrdaRezervacijeActivity extends AppCompatActivity implements OnM
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                mDatabaseUsers.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                mDatabaseUsers.child(userID).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -109,6 +132,8 @@ public class PotvrdaRezervacijeActivity extends AppCompatActivity implements OnM
                                             Rezervacija rezervacija = new Rezervacija(userProfile.ime, userProfile.prezime, userProfile.mobitel, tip, datum, vrijeme, adresa, "Na cekanju", servisID, rezervacijaID);
                                             mDatabaseRezervacije.push().setValue(rezervacija);
                                             Toast.makeText(PotvrdaRezervacijeActivity.this, "Uspješno rezervirano", Toast.LENGTH_SHORT).show();
+
+                                            mDatabaseUsers.removeEventListener(this);
 
                                             Intent i = new Intent(PotvrdaRezervacijeActivity.this, HomeActivity.class);
                                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

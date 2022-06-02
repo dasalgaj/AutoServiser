@@ -12,18 +12,20 @@ public class Servis implements Parcelable {
     public String email;
     public String adresa;
     public String telefon;
+    public String radnoVrijeme;
 
     public Servis(){
 
     }
 
-    public Servis(int servisID, long OIB, String ime, String email, String adresa, String telefon) {
+    public Servis(int servisID, long OIB, String ime, String email, String adresa, String telefon, String radnoVrijeme) {
         this.servisID = servisID;
         this.OIB = OIB;
         this.ime = ime;
         this.email = email;
         this.adresa = adresa;
         this.telefon = telefon;
+        this.radnoVrijeme = radnoVrijeme;
     }
 
     protected Servis(Parcel in) {
@@ -33,6 +35,7 @@ public class Servis implements Parcelable {
         email = in.readString();
         adresa = in.readString();
         telefon = in.readString();
+        radnoVrijeme = in.readString();
     }
 
     public static final Creator<Servis> CREATOR = new Creator<Servis>() {
@@ -60,5 +63,6 @@ public class Servis implements Parcelable {
         dest.writeString(email);
         dest.writeString(adresa);
         dest.writeString(telefon);
+        dest.writeString(radnoVrijeme);
     }
 }

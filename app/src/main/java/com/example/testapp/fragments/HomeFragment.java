@@ -230,6 +230,7 @@ public class HomeFragment extends Fragment {
                 servis.ime = servisi.get(i).ime;
                 servis.servisID = servisi.get(i).servisID;
                 servis.telefon = servisi.get(i).telefon;
+                servis.radnoVrijeme = servisi.get(i).radnoVrijeme;
 
                 intentRezervacija.putExtra("servis", servis);
 
@@ -252,6 +253,7 @@ public class HomeFragment extends Fragment {
                 servis.ime = servisi.get(i).ime;
                 servis.servisID = servisi.get(i).servisID;
                 servis.telefon = servisi.get(i).telefon;
+                servis.radnoVrijeme = servisi.get(i).radnoVrijeme;
 
                 intentRezervacija.putExtra("servis", servis);
 
@@ -274,6 +276,7 @@ public class HomeFragment extends Fragment {
                 servis.ime = servisi.get(i).ime;
                 servis.servisID = servisi.get(i).servisID;
                 servis.telefon = servisi.get(i).telefon;
+                servis.radnoVrijeme = servisi.get(i).radnoVrijeme;
 
                 intentRezervacija.putExtra("servis", servis);
 
@@ -296,6 +299,7 @@ public class HomeFragment extends Fragment {
                 servis.ime = servisi.get(i).ime;
                 servis.servisID = servisi.get(i).servisID;
                 servis.telefon = servisi.get(i).telefon;
+                servis.radnoVrijeme = servisi.get(i).radnoVrijeme;
 
                 intentRezervacija.putExtra("servis", servis);
 
