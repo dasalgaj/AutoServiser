@@ -1,9 +1,12 @@
 package com.example.testapp.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -12,12 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testapp.R;
 import com.example.testapp.activities.HomeActivity;
 import com.example.testapp.activities.HomeActivityServiser;
+import com.example.testapp.activities.PotvrdaRezervacijeActivity;
 import com.example.testapp.activities.RezervacijaActivity;
 import com.example.testapp.listeners.LoginListener;
 import com.example.testapp.models.Rezervacija;
@@ -30,6 +35,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +49,15 @@ public class HomeFragment extends Fragment {
     private View view;
 
     TextView tvOpel, tvNissan, tvCitroen, tvRenault;
+    ImageView ivQRCode;
     Button btnRezervacijaOpel;
     Button btnRezervacijaNissan;
     Button btnRezervacijaCitroen;
     Button btnRezervacijaRenault;
+    Button btnQRCodeOpel;
+    Button btnQRCodeNissan;
+    Button btnQRCodeCitroen;
+    Button btnQRCodeRenault;
 
     DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference("Users");
     DatabaseReference mDatabaseServisi;
@@ -83,12 +98,12 @@ public class HomeFragment extends Fragment {
 
                                         for (DataSnapshot dsRezervacije : snapshotRezervacije.getChildren()){
 
-                                            if (userProfile.rezervacijaID == dsRezervacije.child("rezervacijaID").getValue(Long.class)){
+                                            //KADA JE REZERVACIJA NA CEKANJU
+                                            if (userProfile.rezervacijaID == dsRezervacije.child("rezervacijaID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("Na cekanju")){
 
                                                 if (dsRezervacije.child("servisID").getValue(int.class) == 1){
 
                                                     tvNissan.setText("Na čekanju");
-                                                    tvNissan.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                                                     btnRezervacijaNissan.setVisibility(View.INVISIBLE);
 
                                                 }
@@ -108,6 +123,245 @@ public class HomeFragment extends Fragment {
 
                                                     tvOpel.setText("Na čekanju");
                                                     btnRezervacijaOpel.setVisibility(View.INVISIBLE);
+
+                                                }
+
+                                            }
+
+
+                                            //KADA JE REZERVACIJA POTVRDENA(U TIJEKU)
+                                            if (userProfile.rezervacijaID == dsRezervacije.child("rezervacijaID").getValue(Long.class)){
+
+                                                if ((dsRezervacije.child("servisID").getValue(int.class) == 1) && dsRezervacije.child("status").getValue(String.class).equals("U tijeku")){
+
+                                                    tvNissan.setText("Prihvaćeno");
+                                                    btnQRCodeNissan.setVisibility(View.VISIBLE);
+
+                                                    btnQRCodeNissan.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+
+                                                            MultiFormatWriter writer = new MultiFormatWriter();
+
+                                                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                            LayoutInflater inflater = LayoutInflater.from(getContext());
+                                                            final View viewQR = inflater.inflate(R.layout.layout_qrcode, null);
+
+                                                            //IMAGE VIEW ZA QR CODE
+                                                            ivQRCode = viewQR.findViewById(R.id.ivQRCode);
+
+                                                            try {
+
+                                                                BitMatrix matrix = writer.encode(
+                                                                        "Ime: " + dsRezervacije.child("ime").getValue(String.class) + "\n" +
+                                                                                "Prezime: " + dsRezervacije.child("prezime").getValue(String.class) + "\n" +
+                                                                                "Tip servisa: " + dsRezervacije.child("tip").getValue(String.class) + "\n" +
+                                                                                "Datum servisa: " + dsRezervacije.child("datum").getValue(String.class) + "\n" +
+                                                                                "Vrijeme servisa: " + dsRezervacije.child("vrijeme").getValue(String.class)
+                                                                        , BarcodeFormat.QR_CODE, 350, 350);
+
+                                                                BarcodeEncoder encoder = new BarcodeEncoder();
+
+                                                                Bitmap bitmap = encoder.createBitmap(matrix);
+
+                                                                ivQRCode.setImageBitmap(bitmap);
+
+                                                            } catch (WriterException e) {
+                                                                e.printStackTrace();
+                                                            }
+
+                                                            builder.setView(viewQR);
+                                                            builder.setCancelable(true);
+                                                            builder.setTitle("QR Code");
+                                                            builder.setPositiveButton("Ok",
+                                                                    new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+
+
+
+                                                                        }
+                                                                    });
+
+                                                            AlertDialog dialog = builder.create();
+                                                            dialog.show();
+
+                                                        }
+                                                    });
+
+                                                }
+                                                else if ((dsRezervacije.child("servisID").getValue(int.class) == 2) && dsRezervacije.child("status").getValue(String.class).equals("U tijeku")){
+
+                                                    tvCitroen.setText("Prihvaćeno");
+                                                    btnQRCodeCitroen.setVisibility(View.VISIBLE);
+
+                                                    btnQRCodeCitroen.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+
+                                                            MultiFormatWriter writer = new MultiFormatWriter();
+
+                                                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                            LayoutInflater inflater = LayoutInflater.from(getContext());
+                                                            final View viewQR = inflater.inflate(R.layout.layout_qrcode, null);
+
+                                                            //IMAGE VIEW ZA QR CODE
+                                                            ivQRCode = viewQR.findViewById(R.id.ivQRCode);
+
+                                                            try {
+
+                                                                BitMatrix matrix = writer.encode(
+                                                                        "Ime: " + dsRezervacije.child("ime").getValue(String.class) + "\n" +
+                                                                        "Prezime: " + dsRezervacije.child("prezime").getValue(String.class) + "\n" +
+                                                                        "Tip servisa: " + dsRezervacije.child("tip").getValue(String.class) + "\n" +
+                                                                        "Datum servisa: " + dsRezervacije.child("datum").getValue(String.class) + "\n" +
+                                                                        "Vrijeme servisa: " + dsRezervacije.child("vrijeme").getValue(String.class)
+                                                                        , BarcodeFormat.QR_CODE, 350, 350);
+
+                                                                BarcodeEncoder encoder = new BarcodeEncoder();
+
+                                                                Bitmap bitmap = encoder.createBitmap(matrix);
+
+                                                                ivQRCode.setImageBitmap(bitmap);
+
+                                                            } catch (WriterException e) {
+                                                                e.printStackTrace();
+                                                            }
+
+                                                            builder.setView(viewQR);
+                                                            builder.setCancelable(true);
+                                                            builder.setTitle("QR Code");
+                                                            builder.setPositiveButton("Ok",
+                                                                    new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+
+
+
+                                                                        }
+                                                                    });
+
+                                                            AlertDialog dialog = builder.create();
+                                                            dialog.show();
+
+                                                        }
+                                                    });
+
+                                                }
+                                                else if ((dsRezervacije.child("servisID").getValue(int.class) == 3) && dsRezervacije.child("status").getValue(String.class).equals("U tijeku")){
+
+                                                    tvRenault.setText("Prihvaćeno");
+                                                    btnQRCodeRenault.setVisibility(View.VISIBLE);
+
+                                                    btnQRCodeRenault.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+
+                                                            MultiFormatWriter writer = new MultiFormatWriter();
+
+                                                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                            LayoutInflater inflater = LayoutInflater.from(getContext());
+                                                            final View viewQR = inflater.inflate(R.layout.layout_qrcode, null);
+
+                                                            //IMAGE VIEW ZA QR CODE
+                                                            ivQRCode = viewQR.findViewById(R.id.ivQRCode);
+
+                                                            try {
+
+                                                                BitMatrix matrix = writer.encode(
+                                                                        "Ime: " + dsRezervacije.child("ime").getValue(String.class) + "\n" +
+                                                                                "Prezime: " + dsRezervacije.child("prezime").getValue(String.class) + "\n" +
+                                                                                "Tip servisa: " + dsRezervacije.child("tip").getValue(String.class) + "\n" +
+                                                                                "Datum servisa: " + dsRezervacije.child("datum").getValue(String.class) + "\n" +
+                                                                                "Vrijeme servisa: " + dsRezervacije.child("vrijeme").getValue(String.class)
+                                                                        , BarcodeFormat.QR_CODE, 350, 350);
+
+                                                                BarcodeEncoder encoder = new BarcodeEncoder();
+
+                                                                Bitmap bitmap = encoder.createBitmap(matrix);
+
+                                                                ivQRCode.setImageBitmap(bitmap);
+
+                                                            } catch (WriterException e) {
+                                                                e.printStackTrace();
+                                                            }
+
+                                                            builder.setView(viewQR);
+                                                            builder.setCancelable(true);
+                                                            builder.setTitle("QR Code");
+                                                            builder.setPositiveButton("Ok",
+                                                                    new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+
+
+
+                                                                        }
+                                                                    });
+
+                                                            AlertDialog dialog = builder.create();
+                                                            dialog.show();
+
+                                                        }
+                                                    });
+
+                                                }
+                                                else if ((dsRezervacije.child("servisID").getValue(int.class) == 4) && dsRezervacije.child("status").getValue(String.class).equals("U tijeku")){
+
+                                                    tvOpel.setText("Prihvaćeno");
+                                                    btnQRCodeOpel.setVisibility(View.VISIBLE);
+
+                                                    btnQRCodeOpel.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+
+                                                            MultiFormatWriter writer = new MultiFormatWriter();
+
+                                                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                            LayoutInflater inflater = LayoutInflater.from(getContext());
+                                                            final View viewQR = inflater.inflate(R.layout.layout_qrcode, null);
+
+                                                            //IMAGE VIEW ZA QR CODE
+                                                            ivQRCode = viewQR.findViewById(R.id.ivQRCode);
+
+                                                            try {
+
+                                                                BitMatrix matrix = writer.encode(
+                                                                        "Ime: " + dsRezervacije.child("ime").getValue(String.class) + "\n" +
+                                                                                "Prezime: " + dsRezervacije.child("prezime").getValue(String.class) + "\n" +
+                                                                                "Tip servisa: " + dsRezervacije.child("tip").getValue(String.class) + "\n" +
+                                                                                "Datum servisa: " + dsRezervacije.child("datum").getValue(String.class) + "\n" +
+                                                                                "Vrijeme servisa: " + dsRezervacije.child("vrijeme").getValue(String.class)
+                                                                        , BarcodeFormat.QR_CODE, 350, 350);
+
+                                                                BarcodeEncoder encoder = new BarcodeEncoder();
+
+                                                                Bitmap bitmap = encoder.createBitmap(matrix);
+
+                                                                ivQRCode.setImageBitmap(bitmap);
+
+                                                            } catch (WriterException e) {
+                                                                e.printStackTrace();
+                                                            }
+
+                                                            builder.setView(viewQR);
+                                                            builder.setCancelable(true);
+                                                            builder.setTitle("QR Code");
+                                                            builder.setPositiveButton("Ok",
+                                                                    new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+
+
+
+                                                                        }
+                                                                    });
+
+                                                            AlertDialog dialog = builder.create();
+                                                            dialog.show();
+
+                                                        }
+                                                    });
 
                                                 }
 
@@ -148,6 +402,10 @@ public class HomeFragment extends Fragment {
         btnRezervacijaNissan = view.findViewById(R.id.btnRezervacijaNissan);
         btnRezervacijaCitroen = view.findViewById(R.id.btnRezervacijaCitroen);
         btnRezervacijaRenault = view.findViewById(R.id.btnRezervacijaRenault);
+        btnQRCodeOpel = view.findViewById(R.id.btnQRCode1);
+        btnQRCodeNissan = view.findViewById(R.id.btnQRCode2);
+        btnQRCodeCitroen = view.findViewById(R.id.btnQRCode3);
+        btnQRCodeRenault = view.findViewById(R.id.btnQRCode4);
 
         //TEXT VIEW
         tvOpel = view.findViewById(R.id.tvRezervacija1);

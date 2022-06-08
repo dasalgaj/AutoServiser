@@ -65,6 +65,17 @@
                             android:background="@drawable/ic_add">
                         </Button>
 
+                        <Button
+                            android:id="@+id/btnQRCode1"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvRezervacija1"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/ic_qrcode"
+                            android:visibility="invisible">
+                        </Button>
+
                         <TextView
                             android:id="@+id/tvRezervacija1"
                             android:layout_width="wrap_content"
@@ -186,6 +197,17 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="16dp"
                             android:background="@drawable/ic_add">
+                        </Button>
+
+                        <Button
+                            android:id="@+id/btnQRCode2"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvRezervacija2"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/ic_qrcode"
+                            android:visibility="invisible">
                         </Button>
 
                         <TextView
@@ -310,6 +332,17 @@
                             android:background="@drawable/ic_add">
                         </Button>
 
+                        <Button
+                            android:id="@+id/btnQRCode3"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_below="@id/tvRezervacija3"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="20dp"
+                            android:background="@drawable/ic_qrcode"
+                            android:visibility="invisible">
+                        </Button>
+
                         <TextView
                             android:id="@+id/tvRezervacija3"
                             android:layout_width="wrap_content"
@@ -430,6 +463,17 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="16dp"
                             android:background="@drawable/ic_add">
+                        </Button>
+
+                        <Button
+                            android:id="@+id/btnQRCode4"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvRezervacija4"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/ic_qrcode"
+                            android:visibility="invisible">
                         </Button>
 
                         <TextView
