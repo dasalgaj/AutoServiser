@@ -88,7 +88,7 @@ public class HomeFragmentServiser extends Fragment {
                                         rezervacije.clear();
 
                                         //RV Rezervacije
-                                        rezervacijeAdapter = new RezervacijeRVAdapter(rezervacije, getContext());
+                                        rezervacijeAdapter = new RezervacijeRVAdapter(rezervacije, tvEmpty, getContext());
 
                                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                         mRecyclerView.setAdapter(rezervacijeAdapter);
@@ -102,7 +102,7 @@ public class HomeFragmentServiser extends Fragment {
                                                 rezervacije.add(rezervacija);
 
                                                 //RV Rezervacije
-                                                rezervacijeAdapter = new RezervacijeRVAdapter(rezervacije, getContext());
+                                                rezervacijeAdapter = new RezervacijeRVAdapter(rezervacije, tvEmpty, getContext());
 
                                                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                                 mRecyclerView.setAdapter(rezervacijeAdapter);
@@ -112,10 +112,7 @@ public class HomeFragmentServiser extends Fragment {
                                         }
 
                                         if (rezervacijeAdapter.getItemCount() == 0){
-                                            tvEmpty.setText("Trenutno nemate rezervacija");
-                                        }
-                                        else{
-                                            tvEmpty.setVisibility(View.INVISIBLE);
+                                            tvEmpty.setText("Trenutno nema rezervacija na čekanju");
                                         }
 
                                     }

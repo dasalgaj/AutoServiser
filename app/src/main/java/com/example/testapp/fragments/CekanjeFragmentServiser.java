@@ -86,7 +86,7 @@ public class CekanjeFragmentServiser extends Fragment {
                                         rezervacije.clear();
 
                                         //RV RezervacijeCekanje
-                                        rezervacijeAdapter = new CekanjeRVAdapter(rezervacije, getContext());
+                                        rezervacijeAdapter = new CekanjeRVAdapter(rezervacije, tvEmptyCekanje, getContext());
 
                                         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                         mRecyclerView.setAdapter(rezervacijeAdapter);
@@ -100,7 +100,7 @@ public class CekanjeFragmentServiser extends Fragment {
                                                 rezervacije.add(rezervacija);
 
                                                 //RV RezervacijeCekanje
-                                                rezervacijeAdapter = new CekanjeRVAdapter(rezervacije, getContext());
+                                                rezervacijeAdapter = new CekanjeRVAdapter(rezervacije, tvEmptyCekanje, getContext());
 
                                                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                                 mRecyclerView.setAdapter(rezervacijeAdapter);

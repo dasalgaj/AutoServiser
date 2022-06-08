@@ -2,6 +2,7 @@ package com.example.testapp.models;
 
 public class Rezervacija {
 
+    public long oibServisa;
     public String ime;
     public String prezime;
     public String mobitel;
@@ -16,7 +17,8 @@ public class Rezervacija {
     public Rezervacija() {
     }
 
-    public Rezervacija(String ime, String prezime, String mobitel, String tip, String datum, String vrijeme, String adresa, String status,  int servisID, long rezervacijaID) {
+    public Rezervacija(long oibServisa, String ime, String prezime, String mobitel, String tip, String datum, String vrijeme, String adresa, String status,  int servisID, long rezervacijaID) {
+        this.oibServisa = oibServisa;
         this.ime = ime;
         this.prezime = prezime;
         this.mobitel = mobitel;
@@ -30,6 +32,10 @@ public class Rezervacija {
     }
 
     //GETTER
+    public long getOibServisa() {
+        return oibServisa;
+    }
+
     public String getIme() {
         return ime;
     }
@@ -71,6 +77,10 @@ public class Rezervacija {
     }
 
     //SETTER
+    public void setOibServisa(long oibServisa) {
+        this.oibServisa = oibServisa;
+    }
+
     public void setIme(String ime) {
         this.ime = ime;
     }

@@ -49,7 +49,8 @@ public class PotvrdaRezervacijeActivity extends AppCompatActivity implements OnM
 
     FirebaseUser user;
     DatabaseReference mDatabaseRezervacije;
-    DatabaseReference mDatabaseUsers;
+    DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference("Users");
+    DatabaseReference mDatabaseServisi = FirebaseDatabase.getInstance().getReference("Servisi");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,6 @@ public class PotvrdaRezervacijeActivity extends AppCompatActivity implements OnM
         mDatabaseRezervacije = FirebaseDatabase.getInstance().getReference().child("Rezervacije");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        mDatabaseUsers = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -82,30 +82,12 @@ public class PotvrdaRezervacijeActivity extends AppCompatActivity implements OnM
         adresa = getIntent().getStringExtra("adresa");
         imeServisa = getIntent().getStringExtra("imeServisa");
         int servisID = getIntent().getIntExtra("servisID", 0);
+        long oibServisa = getIntent().getLongExtra("oibServisa", 0);
 
         tvPotvrdaTip.setText("Tip servisa: " + tip);
         tvPotvrdaDatum.setText("Datum servisa: " + datum);
         tvPotvrdaVrijeme.setText("Vrijeme servisa: " + vrijeme);
         tvPotvrdaAdresa.setText("Adresa servisa: " + adresa);
-
-        ValueEventListener stateValueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User userProfile = snapshot.getValue(User.class);
-
-                if (userProfile != null){
-                    rezervacijaID = userProfile.rezervacijaID;
-
-                    rezervacija = new Rezervacija(userProfile.ime, userProfile.prezime, userProfile.mobitel, tip, datum, vrijeme, adresa, "Na cekanju", servisID, rezervacijaID);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-
 
 
         mBtnRezervacijaPotvrdi.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +111,7 @@ public class PotvrdaRezervacijeActivity extends AppCompatActivity implements OnM
                                         if (userProfile != null){
                                             rezervacijaID = userProfile.rezervacijaID;
 
-                                            Rezervacija rezervacija = new Rezervacija(userProfile.ime, userProfile.prezime, userProfile.mobitel, tip, datum, vrijeme, adresa, "Na cekanju", servisID, rezervacijaID);
+                                            Rezervacija rezervacija = new Rezervacija(oibServisa, userProfile.ime, userProfile.prezime, userProfile.mobitel, tip, datum, vrijeme, adresa, "Na cekanju", servisID, rezervacijaID);
                                             mDatabaseRezervacije.push().setValue(rezervacija);
                                             Toast.makeText(PotvrdaRezervacijeActivity.this, "Uspješno rezervirano", Toast.LENGTH_SHORT).show();
 

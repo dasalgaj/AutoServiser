@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,13 +34,15 @@ public class RezervacijeRVAdapter extends RecyclerView.Adapter<RezervacijeRVAdap
 
     private ArrayList<Rezervacija> rezervacijaArrayList;
     private Context context;
+    private TextView tvEmpty;
 
     DatabaseReference mDatabaseRezervacije = FirebaseDatabase.getInstance().getReference("Rezervacije");
 
     String key;
 
-    public RezervacijeRVAdapter(ArrayList<Rezervacija> rezervacijaArrayList, Context context) {
+    public RezervacijeRVAdapter(ArrayList<Rezervacija> rezervacijaArrayList, TextView tvEmpty, Context context) {
         this.rezervacijaArrayList = rezervacijaArrayList;
+        this.tvEmpty = tvEmpty;
         this.context = context;
     }
 
@@ -87,6 +90,10 @@ public class RezervacijeRVAdapter extends RecyclerView.Adapter<RezervacijeRVAdap
 
                                 }
 
+                            }
+
+                            if (getItemCount() == 0){
+                                tvEmpty.setText("Trenutno nema rezervacija na čekanju");
                             }
 
                         }

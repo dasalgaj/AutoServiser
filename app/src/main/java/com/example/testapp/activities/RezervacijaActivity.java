@@ -53,6 +53,7 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
     String adresaServisa;
     String imeServisa;
     String radnoVrijeme;
+    long oibServisa;
     int servisID;
 
     DatabaseReference mDatabaseRezervacije = FirebaseDatabase.getInstance().getReference("Rezervacije");
@@ -109,6 +110,7 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
                 imeServisa = servis.ime;
                 servisID = servis.servisID;
                 radnoVrijeme = servis.radnoVrijeme;
+                oibServisa = servis.OIB;
 
                 String[] radnaVremena = radnoVrijeme.split("-");
                 radnaVremena[0] = radnaVremena[0].trim();
@@ -150,6 +152,7 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
                                     i.putExtra("adresa", adresaServisa);
                                     i.putExtra("imeServisa", imeServisa);
                                     i.putExtra("servisID", servisID);
+                                    i.putExtra("oibServisa", oibServisa);
                                     startActivity(i);
 
                                 }

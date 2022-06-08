@@ -1,12 +1,18 @@
 package com.example.testapp.fragments;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -47,8 +53,10 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private View view;
+    static final String CHANNEL_1_ID = "channel1";
+    NotificationManagerCompat notificationManager;
 
-    TextView tvOpel, tvNissan, tvCitroen, tvRenault;
+    TextView tvOpel, tvNissan, tvCitroen, tvRenault, tvOpelServis, tvNissanServis, tvCitroenServis, tvRenaultServis;
     ImageView ivQRCode;
     Button btnRezervacijaOpel;
     Button btnRezervacijaNissan;
@@ -135,6 +143,7 @@ public class HomeFragment extends Fragment {
                                                 if ((dsRezervacije.child("servisID").getValue(int.class) == 1) && dsRezervacije.child("status").getValue(String.class).equals("U tijeku")){
 
                                                     tvNissan.setText("Prihvaćeno");
+                                                    btnRezervacijaNissan.setVisibility(View.INVISIBLE);
                                                     btnQRCodeNissan.setVisibility(View.VISIBLE);
 
                                                     btnQRCodeNissan.setOnClickListener(new View.OnClickListener() {
@@ -153,11 +162,16 @@ public class HomeFragment extends Fragment {
                                                             try {
 
                                                                 BitMatrix matrix = writer.encode(
-                                                                        "Ime: " + dsRezervacije.child("ime").getValue(String.class) + "\n" +
-                                                                                "Prezime: " + dsRezervacije.child("prezime").getValue(String.class) + "\n" +
+                                                                        "Podaci servisa: " +  "\n" +
+                                                                                "OIB servisa: " + dsRezervacije.child("oibServisa").getValue(Long.class) + "\n" +
+                                                                                "Adresa servisa: " + dsRezervacije.child("adresa").getValue(String.class) + "\n" +
                                                                                 "Tip servisa: " + dsRezervacije.child("tip").getValue(String.class) + "\n" +
                                                                                 "Datum servisa: " + dsRezervacije.child("datum").getValue(String.class) + "\n" +
-                                                                                "Vrijeme servisa: " + dsRezervacije.child("vrijeme").getValue(String.class)
+                                                                                "Vrijeme servisa: " + dsRezervacije.child("vrijeme").getValue(String.class) + "\n" +
+                                                                                "\nPodaci korisnika: \n" +
+                                                                                "Ime: " + dsRezervacije.child("ime").getValue(String.class) + "\n" +
+                                                                                "Prezime: " + dsRezervacije.child("prezime").getValue(String.class) + "\n" +
+                                                                                "Mobitel: " + dsRezervacije.child("mobitel").getValue(String.class)
                                                                         , BarcodeFormat.QR_CODE, 350, 350);
 
                                                                 BarcodeEncoder encoder = new BarcodeEncoder();
@@ -193,6 +207,7 @@ public class HomeFragment extends Fragment {
                                                 else if ((dsRezervacije.child("servisID").getValue(int.class) == 2) && dsRezervacije.child("status").getValue(String.class).equals("U tijeku")){
 
                                                     tvCitroen.setText("Prihvaćeno");
+                                                    btnRezervacijaCitroen.setVisibility(View.INVISIBLE);
                                                     btnQRCodeCitroen.setVisibility(View.VISIBLE);
 
                                                     btnQRCodeCitroen.setOnClickListener(new View.OnClickListener() {
@@ -211,11 +226,16 @@ public class HomeFragment extends Fragment {
                                                             try {
 
                                                                 BitMatrix matrix = writer.encode(
-                                                                        "Ime: " + dsRezervacije.child("ime").getValue(String.class) + "\n" +
-                                                                        "Prezime: " + dsRezervacije.child("prezime").getValue(String.class) + "\n" +
-                                                                        "Tip servisa: " + dsRezervacije.child("tip").getValue(String.class) + "\n" +
-                                                                        "Datum servisa: " + dsRezervacije.child("datum").getValue(String.class) + "\n" +
-                                                                        "Vrijeme servisa: " + dsRezervacije.child("vrijeme").getValue(String.class)
+                                                                        "Podaci servisa: " +  "\n" +
+                                                                                "OIB servisa: " + dsRezervacije.child("oibServisa").getValue(Long.class) + "\n" +
+                                                                                "Adresa servisa: " + dsRezervacije.child("adresa").getValue(String.class) + "\n" +
+                                                                                "Tip servisa: " + dsRezervacije.child("tip").getValue(String.class) + "\n" +
+                                                                                "Datum servisa: " + dsRezervacije.child("datum").getValue(String.class) + "\n" +
+                                                                                "Vrijeme servisa: " + dsRezervacije.child("vrijeme").getValue(String.class) + "\n" +
+                                                                                "\nPodaci korisnika: \n" +
+                                                                                "Ime: " + dsRezervacije.child("ime").getValue(String.class) + "\n" +
+                                                                                "Prezime: " + dsRezervacije.child("prezime").getValue(String.class) + "\n" +
+                                                                                "Mobitel: " + dsRezervacije.child("mobitel").getValue(String.class)
                                                                         , BarcodeFormat.QR_CODE, 350, 350);
 
                                                                 BarcodeEncoder encoder = new BarcodeEncoder();
@@ -251,6 +271,7 @@ public class HomeFragment extends Fragment {
                                                 else if ((dsRezervacije.child("servisID").getValue(int.class) == 3) && dsRezervacije.child("status").getValue(String.class).equals("U tijeku")){
 
                                                     tvRenault.setText("Prihvaćeno");
+                                                    btnRezervacijaRenault.setVisibility(View.INVISIBLE);
                                                     btnQRCodeRenault.setVisibility(View.VISIBLE);
 
                                                     btnQRCodeRenault.setOnClickListener(new View.OnClickListener() {
@@ -269,11 +290,16 @@ public class HomeFragment extends Fragment {
                                                             try {
 
                                                                 BitMatrix matrix = writer.encode(
-                                                                        "Ime: " + dsRezervacije.child("ime").getValue(String.class) + "\n" +
-                                                                                "Prezime: " + dsRezervacije.child("prezime").getValue(String.class) + "\n" +
+                                                                        "Podaci servisa: " +  "\n" +
+                                                                                "OIB servisa: " + dsRezervacije.child("oibServisa").getValue(Long.class) + "\n" +
+                                                                                "Adresa servisa: " + dsRezervacije.child("adresa").getValue(String.class) + "\n" +
                                                                                 "Tip servisa: " + dsRezervacije.child("tip").getValue(String.class) + "\n" +
                                                                                 "Datum servisa: " + dsRezervacije.child("datum").getValue(String.class) + "\n" +
-                                                                                "Vrijeme servisa: " + dsRezervacije.child("vrijeme").getValue(String.class)
+                                                                                "Vrijeme servisa: " + dsRezervacije.child("vrijeme").getValue(String.class) + "\n" +
+                                                                                "\nPodaci korisnika: \n" +
+                                                                                "Ime: " + dsRezervacije.child("ime").getValue(String.class) + "\n" +
+                                                                                "Prezime: " + dsRezervacije.child("prezime").getValue(String.class) + "\n" +
+                                                                                "Mobitel: " + dsRezervacije.child("mobitel").getValue(String.class)
                                                                         , BarcodeFormat.QR_CODE, 350, 350);
 
                                                                 BarcodeEncoder encoder = new BarcodeEncoder();
@@ -309,6 +335,7 @@ public class HomeFragment extends Fragment {
                                                 else if ((dsRezervacije.child("servisID").getValue(int.class) == 4) && dsRezervacije.child("status").getValue(String.class).equals("U tijeku")){
 
                                                     tvOpel.setText("Prihvaćeno");
+                                                    btnRezervacijaOpel.setVisibility(View.INVISIBLE);
                                                     btnQRCodeOpel.setVisibility(View.VISIBLE);
 
                                                     btnQRCodeOpel.setOnClickListener(new View.OnClickListener() {
@@ -327,11 +354,16 @@ public class HomeFragment extends Fragment {
                                                             try {
 
                                                                 BitMatrix matrix = writer.encode(
-                                                                        "Ime: " + dsRezervacije.child("ime").getValue(String.class) + "\n" +
-                                                                                "Prezime: " + dsRezervacije.child("prezime").getValue(String.class) + "\n" +
+                                                                        "Podaci servisa: " +  "\n" +
+                                                                                "OIB servisa: " + dsRezervacije.child("oibServisa").getValue(Long.class) + "\n" +
+                                                                                "Adresa servisa: " + dsRezervacije.child("adresa").getValue(String.class) + "\n" +
                                                                                 "Tip servisa: " + dsRezervacije.child("tip").getValue(String.class) + "\n" +
                                                                                 "Datum servisa: " + dsRezervacije.child("datum").getValue(String.class) + "\n" +
-                                                                                "Vrijeme servisa: " + dsRezervacije.child("vrijeme").getValue(String.class)
+                                                                                "Vrijeme servisa: " + dsRezervacije.child("vrijeme").getValue(String.class) + "\n" +
+                                                                                "\nPodaci korisnika: \n" +
+                                                                                "Ime: " + dsRezervacije.child("ime").getValue(String.class) + "\n" +
+                                                                                "Prezime: " + dsRezervacije.child("prezime").getValue(String.class) + "\n" +
+                                                                                "Mobitel: " + dsRezervacije.child("mobitel").getValue(String.class)
                                                                         , BarcodeFormat.QR_CODE, 350, 350);
 
                                                                 BarcodeEncoder encoder = new BarcodeEncoder();
@@ -366,6 +398,64 @@ public class HomeFragment extends Fragment {
                                                 }
 
                                             }
+
+                                            //KADA JE REZERVACIJA OBAVLJENA
+                                            mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                                    for (DataSnapshot ds : snapshot.getChildren()){
+
+                                                        if (userProfile.rezervacijaID == dsRezervacije.child("rezervacijaID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("Obavljeno")){
+
+                                                            if (dsRezervacije.child("servisID").getValue(int.class) == 1){
+
+                                                                btnQRCodeNissan.setVisibility(View.INVISIBLE);
+                                                                btnRezervacijaNissan.setVisibility(View.VISIBLE);
+                                                                tvNissan.setText("Rezervacija");
+
+                                                                sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+
+                                                            }
+                                                            else if (dsRezervacije.child("servisID").getValue(int.class) == 2){
+
+                                                                btnQRCodeCitroen.setVisibility(View.INVISIBLE);
+                                                                btnRezervacijaCitroen.setVisibility(View.VISIBLE);
+                                                                tvCitroen.setText("Rezervacija");
+
+                                                                sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+
+                                                            }
+                                                            else if (dsRezervacije.child("servisID").getValue(int.class) == 3){
+
+                                                                btnQRCodeRenault.setVisibility(View.INVISIBLE);
+                                                                btnRezervacijaRenault.setVisibility(View.VISIBLE);
+                                                                tvRenault.setText("Rezervacija");
+
+                                                                sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+
+                                                            }
+                                                            else if (dsRezervacije.child("servisID").getValue(int.class) == 4){
+
+                                                                btnQRCodeOpel.setVisibility(View.INVISIBLE);
+                                                                btnRezervacijaOpel.setVisibility(View.VISIBLE);
+                                                                tvOpel.setText("Rezervacija");
+
+                                                                sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+
+                                                            }
+
+                                                        }
+
+                                                    }
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
 
                                         }
 
@@ -412,10 +502,17 @@ public class HomeFragment extends Fragment {
         tvNissan = view.findViewById(R.id.tvRezervacija2);
         tvCitroen = view.findViewById(R.id.tvRezervacija3);
         tvRenault = view.findViewById(R.id.tvRezervacija4);
+        tvOpelServis = view.findViewById(R.id.tvOpelServis);
+        tvNissanServis = view.findViewById(R.id.tvNissanServis);
+        tvCitroenServis = view.findViewById(R.id.tvCitroenServis);
+        tvRenaultServis = view.findViewById(R.id.tvRenaultServis);
 
         //DATABASE
         mDatabaseServisi = FirebaseDatabase.getInstance().getReference().child("Servisi");
         auth = FirebaseAuth.getInstance();
+
+        //NOTIFICATION
+        notificationManager = NotificationManagerCompat.from(getContext());
 
         mDatabaseServisi.addValueEventListener(new ValueEventListener() {
             @Override
@@ -564,6 +661,20 @@ public class HomeFragment extends Fragment {
                 startActivity(intentRezervacija);
             }
         }
+
+    }
+
+    public void sendOnChannel1(String imeServisa, String tipServisa){
+
+        Notification notification = new NotificationCompat.Builder(getContext(), CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle(imeServisa)
+                .setContentText(tipServisa + " na vašem automobilu je obavljen")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+
+        notificationManager.notify(1, notification);
 
     }
 }

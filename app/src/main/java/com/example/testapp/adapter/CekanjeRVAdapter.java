@@ -28,9 +28,15 @@ public class CekanjeRVAdapter extends RecyclerView.Adapter<CekanjeRVAdapter.View
 
     private ArrayList<Rezervacija> rezervacijaArrayList;
     private Context context;
+    private TextView tvEmpty;
 
-    public CekanjeRVAdapter(ArrayList<Rezervacija> rezervacijaArrayList, Context context) {
+    DatabaseReference mDatabaseRezervacije = FirebaseDatabase.getInstance().getReference("Rezervacije");
+
+    String key;
+
+    public CekanjeRVAdapter(ArrayList<Rezervacija> rezervacijaArrayList, TextView tvEmpty, Context context) {
         this.rezervacijaArrayList = rezervacijaArrayList;
+        this.tvEmpty = tvEmpty;
         this.context = context;
     }
 
@@ -57,7 +63,43 @@ public class CekanjeRVAdapter extends RecyclerView.Adapter<CekanjeRVAdapter.View
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(v.getContext(), "Test", Toast.LENGTH_SHORT).show();
+                mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshotRezervacije) {
+
+                        if (snapshotRezervacije.exists()){
+
+                            for (DataSnapshot dsRezervacije : snapshotRezervacije.getChildren()){
+
+                                if (rezervacije.getRezervacijaID() == dsRezervacije.child("rezervacijaID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("U tijeku")){
+
+                                    key = dsRezervacije.getKey();
+
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Rezervacije").child(key);
+                                    Map<String, Object> updates = new HashMap<String,Object>();
+
+                                    updates.put("status", "Obavljeno");
+
+                                    ref.updateChildren(updates);
+
+                                }
+
+                            }
+
+                            if (getItemCount() == 0){
+                                tvEmpty.setVisibility(View.VISIBLE);
+                                tvEmpty.setText("Trenutno nema rezervacija u tijeku");
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
             }
         });
