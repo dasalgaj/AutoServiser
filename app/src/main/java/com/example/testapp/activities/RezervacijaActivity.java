@@ -46,6 +46,7 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
     Button mBtnVrijeme;
     AutoCompleteTextView autoCompleteTextView;
 
+    boolean provjera;
     String tipServisa;
     String datumServisa;
     String vrijemeServisa;
@@ -125,28 +126,36 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
 
                                     Toast.makeText(RezervacijaActivity.this, "Vrijeme je zauzeto", Toast.LENGTH_SHORT).show();
 
+                                    provjera = false;
+
                                 }
                                 else{
 
-                                    if (checkTime(radnaVremena[0], radnaVremena[1], vrijemeServisa)){
+                                    provjera = true;
 
-                                        mDatabaseRezervacije.removeEventListener(this);
+                                }
 
-                                        Intent i = new Intent(RezervacijaActivity.this, PotvrdaRezervacijeActivity.class);
-                                        i.putExtra("tip", tipServisa);
-                                        i.putExtra("datum", datumServisa);
-                                        i.putExtra("vrijeme", vrijemeServisa);
-                                        i.putExtra("adresa", adresaServisa);
-                                        i.putExtra("imeServisa", imeServisa);
-                                        i.putExtra("servisID", servisID);
-                                        startActivity(i);
+                            }
 
-                                    }
-                                    else{
+                            mDatabaseRezervacije.removeEventListener(this);
 
-                                        Toast.makeText(RezervacijaActivity.this, "Izvan radnog vremena", Toast.LENGTH_SHORT).show();
+                            if (provjera){
 
-                                    }
+                                if (checkTime(radnaVremena[0], radnaVremena[1], vrijemeServisa)){
+
+                                    Intent i = new Intent(RezervacijaActivity.this, PotvrdaRezervacijeActivity.class);
+                                    i.putExtra("tip", tipServisa);
+                                    i.putExtra("datum", datumServisa);
+                                    i.putExtra("vrijeme", vrijemeServisa);
+                                    i.putExtra("adresa", adresaServisa);
+                                    i.putExtra("imeServisa", imeServisa);
+                                    i.putExtra("servisID", servisID);
+                                    startActivity(i);
+
+                                }
+                                else{
+
+                                    Toast.makeText(RezervacijaActivity.this, "Izvan radnog vremena", Toast.LENGTH_SHORT).show();
 
                                 }
 
@@ -213,7 +222,7 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
             calendar3.add(Calendar.DATE, 1);
 
             Date x = calendar3.getTime();
-            if (x.after(calendar1.getTime()) && x.before(calendar2.getTime()) || x.equals(calendar1.getTime()) || x.equals(calendar2.getTime())) {
+            if (x.after(calendar1.getTime()) && x.before(calendar2.getTime()) || x.equals(calendar1.getTime())) {
 
                 return true;
 
