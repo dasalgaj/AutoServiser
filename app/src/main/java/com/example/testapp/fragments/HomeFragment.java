@@ -48,7 +48,9 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
@@ -75,7 +77,7 @@ public class HomeFragment extends Fragment {
 
     List<Servis> servisi = new ArrayList<>();
 
-    String userID;
+    String userID, key;
 
     public LoginListener loginListener;
 
@@ -406,7 +408,7 @@ public class HomeFragment extends Fragment {
 
                                                     for (DataSnapshot ds : snapshot.getChildren()){
 
-                                                        if (userProfile.rezervacijaID == dsRezervacije.child("rezervacijaID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("Obavljeno")){
+                                                        if (userProfile.rezervacijaID == dsRezervacije.child("rezervacijaID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("ObavljenoN")){
 
                                                             if (dsRezervacije.child("servisID").getValue(int.class) == 1){
 
@@ -415,6 +417,8 @@ public class HomeFragment extends Fragment {
                                                                 tvNissan.setText("Rezervacija");
 
                                                                 sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+
+                                                                updateStatus(dsRezervacije.getKey());
 
                                                             }
                                                             else if (dsRezervacije.child("servisID").getValue(int.class) == 2){
@@ -425,6 +429,8 @@ public class HomeFragment extends Fragment {
 
                                                                 sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
 
+                                                                updateStatus(dsRezervacije.getKey());
+
                                                             }
                                                             else if (dsRezervacije.child("servisID").getValue(int.class) == 3){
 
@@ -434,6 +440,8 @@ public class HomeFragment extends Fragment {
 
                                                                 sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
 
+                                                                updateStatus(dsRezervacije.getKey());
+
                                                             }
                                                             else if (dsRezervacije.child("servisID").getValue(int.class) == 4){
 
@@ -442,6 +450,8 @@ public class HomeFragment extends Fragment {
                                                                 tvOpel.setText("Rezervacija");
 
                                                                 sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+
+                                                                updateStatus(dsRezervacije.getKey());
 
                                                             }
 
@@ -675,6 +685,17 @@ public class HomeFragment extends Fragment {
                 .build();
 
         notificationManager.notify(1, notification);
+
+    }
+
+    public void updateStatus(String key){
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Rezervacije").child(key);
+        Map<String, Object> updates = new HashMap<String,Object>();
+
+        updates.put("status", "Obavljeno");
+
+        ref.updateChildren(updates);
 
     }
 }

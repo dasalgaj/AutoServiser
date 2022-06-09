@@ -29,21 +29,24 @@
             android:id="@+id/home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/home">
+            android:text="@string/home"
+            android:icon="@drawable/ic_home">
         </com.google.android.material.tabs.TabItem>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/location">
+            android:text="@string/location"
+            android:icon="@drawable/ic_marker">
         </com.google.android.material.tabs.TabItem>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/profile">
+            android:text="@string/profile"
+            android:icon="@drawable/ic_user">
         </com.google.android.material.tabs.TabItem>
 
     </com.google.android.material.tabs.TabLayout>

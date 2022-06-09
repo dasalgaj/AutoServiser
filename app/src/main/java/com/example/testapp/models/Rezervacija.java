@@ -13,6 +13,15 @@ public class Rezervacija {
     public String status;
     public int servisID;
     public long rezervacijaID;
+    public boolean expandable;
+
+    public boolean isExpandable() {
+        return expandable;
+    }
+
+    public void setExpandable(boolean expandable) {
+        this.expandable = expandable;
+    }
 
     public Rezervacija() {
     }
@@ -29,6 +38,7 @@ public class Rezervacija {
         this.status = status;
         this.servisID = servisID;
         this.rezervacijaID = rezervacijaID;
+        this.expandable = false;
     }
 
     //GETTER

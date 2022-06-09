@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,11 +39,14 @@ public class ObavljenoRVAdapter extends RecyclerView.Adapter<ObavljenoRVAdapter.
     public void onBindViewHolder(@NonNull ObavljenoRVAdapter.ViewHolder holder, int position) {
         Rezervacija rezervacije = rezervacijaArrayList.get(position);
 
-        holder.mTipServisa.setText("Tip servisa: " + rezervacije.getTip());
-        holder.mDatumServisa.setText("Datum servisa: " + rezervacije.getDatum());
+        holder.mTipServisa.setText(rezervacije.getTip());
+        holder.mDatumServisa.setText(rezervacije.getDatum());
         holder.mVrijemeServisa.setText("Vrijeme servisa: " + rezervacije.getVrijeme());
         holder.mImePrezime.setText("Ime i prezime: " + rezervacije.getIme() + " " + rezervacije.getPrezime());
         holder.mMobitel.setText("Mobitel: " + rezervacije.getMobitel());
+
+        boolean isExpandable= rezervacijaArrayList.get(position).isExpandable();
+        holder.expandableLayout.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -56,6 +61,9 @@ public class ObavljenoRVAdapter extends RecyclerView.Adapter<ObavljenoRVAdapter.
         private TextView mImePrezime;
         private TextView mMobitel;
 
+        private RelativeLayout relativeLayout;
+        private RelativeLayout expandableLayout;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mTipServisa = itemView.findViewById(R.id.tvTipObavljeno);
@@ -63,6 +71,20 @@ public class ObavljenoRVAdapter extends RecyclerView.Adapter<ObavljenoRVAdapter.
             mVrijemeServisa = itemView.findViewById(R.id.tvVrijemeObavljeno);
             mImePrezime = itemView.findViewById(R.id.tvImePrezimeObavljeno);
             mMobitel = itemView.findViewById(R.id.tvMobitelObavljeno);
+
+            relativeLayout = itemView.findViewById(R.id.relativeLayoutExpandable);
+            expandableLayout = itemView.findViewById(R.id.expandable_layout);
+
+            relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Rezervacija rezervacija = rezervacijaArrayList.get(getAdapterPosition());
+                    rezervacija.setExpandable(!rezervacija.isExpandable());
+                    notifyItemChanged(getAdapterPosition());
+
+                }
+            });
         }
     }
 }

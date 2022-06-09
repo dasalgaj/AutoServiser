@@ -78,7 +78,7 @@ public class CekanjeRVAdapter extends RecyclerView.Adapter<CekanjeRVAdapter.View
                                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Rezervacije").child(key);
                                     Map<String, Object> updates = new HashMap<String,Object>();
 
-                                    updates.put("status", "Obavljeno");
+                                    updates.put("status", "ObavljenoN");
 
                                     ref.updateChildren(updates);
 

@@ -93,7 +93,7 @@ public class ObavljenoFragmentServiser extends Fragment {
 
                                         for (DataSnapshot dsRezervacije : snapshotRezervacije.getChildren()){
 
-                                            if (userProfile.servisID == dsRezervacije.child("servisID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("Obavljeno")){
+                                            if (userProfile.servisID == dsRezervacije.child("servisID").getValue(Long.class) && (dsRezervacije.child("status").getValue(String.class).equals("ObavljenoN") || dsRezervacije.child("status").getValue(String.class).equals("Obavljeno"))){
 
                                                 Rezervacija rezervacija = dsRezervacije.getValue(Rezervacija.class);
 
