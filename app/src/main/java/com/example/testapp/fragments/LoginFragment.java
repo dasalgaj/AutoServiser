@@ -138,4 +138,12 @@ public class LoginFragment extends Fragment {
         });
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mEmail.getText().clear();
+        mLozinka.getText().clear();
+    }
 }

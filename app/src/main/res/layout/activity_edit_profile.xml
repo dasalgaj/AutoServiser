@@ -15,7 +15,7 @@
         android:textColor="@color/yellow"
         android:textAlignment="center"
         android:textSize="40sp"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="55dp">
     </TextView>
 
     <EditText

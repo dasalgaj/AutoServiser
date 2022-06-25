@@ -55,17 +55,18 @@
                         android:layout_marginTop="12dp"
                         android:layout_marginEnd="30dp">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnRezervacijaOpel"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_below="@id/tvRezervacija1"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="16dp"
-                            android:background="@drawable/ic_add">
-                        </Button>
+                            android:background="@drawable/ic_add"
+                            android:backgroundTint="@color/black_shade_1">
+                        </androidx.appcompat.widget.AppCompatButton>
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnQRCode1"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
@@ -73,8 +74,9 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="16dp"
                             android:background="@drawable/ic_qrcode"
-                            android:visibility="invisible">
-                        </Button>
+                            android:visibility="invisible"
+                            android:backgroundTint="@color/black_shade_1">
+                        </androidx.appcompat.widget.AppCompatButton>
 
                         <TextView
                             android:id="@+id/tvRezervacija1"
@@ -190,17 +192,18 @@
                         android:layout_marginEnd="30dp"
                         android:orientation="horizontal">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnRezervacijaNissan"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_below="@id/tvRezervacija2"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="16dp"
-                            android:background="@drawable/ic_add">
-                        </Button>
+                            android:background="@drawable/ic_add"
+                            android:backgroundTint="@color/black_shade_1">
+                        </androidx.appcompat.widget.AppCompatButton>
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnQRCode2"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
@@ -208,8 +211,9 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="16dp"
                             android:background="@drawable/ic_qrcode"
-                            android:visibility="invisible">
-                        </Button>
+                            android:visibility="invisible"
+                            android:backgroundTint="@color/black_shade_1">
+                        </androidx.appcompat.widget.AppCompatButton>
 
                         <TextView
                             android:id="@+id/tvRezervacija2"
@@ -324,17 +328,18 @@
                         android:layout_marginEnd="30dp"
                         android:orientation="horizontal">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnRezervacijaCitroen"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_below="@id/tvRezervacija3"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="16dp"
-                            android:background="@drawable/ic_add">
-                        </Button>
+                            android:background="@drawable/ic_add"
+                            android:backgroundTint="@color/black_shade_1">
+                        </androidx.appcompat.widget.AppCompatButton>
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnQRCode3"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -342,8 +347,9 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="20dp"
                             android:background="@drawable/ic_qrcode"
-                            android:visibility="invisible">
-                        </Button>
+                            android:visibility="invisible"
+                            android:backgroundTint="@color/black_shade_1">
+                        </androidx.appcompat.widget.AppCompatButton>
 
                         <TextView
                             android:id="@+id/tvRezervacija3"
@@ -458,17 +464,18 @@
                         android:layout_marginEnd="30dp"
                         android:orientation="horizontal">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnRezervacijaRenault"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_below="@id/tvRezervacija4"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="16dp"
-                            android:background="@drawable/ic_add">
-                        </Button>
+                            android:background="@drawable/ic_add"
+                            android:backgroundTint="@color/black_shade_1">
+                        </androidx.appcompat.widget.AppCompatButton>
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnQRCode4"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
@@ -476,8 +483,9 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="16dp"
                             android:background="@drawable/ic_qrcode"
-                            android:visibility="invisible">
-                        </Button>
+                            android:visibility="invisible"
+                            android:backgroundTint="@color/black_shade_1">
+                        </androidx.appcompat.widget.AppCompatButton>
 
                         <TextView
                             android:id="@+id/tvRezervacija4"

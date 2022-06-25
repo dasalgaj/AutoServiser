@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -37,12 +39,15 @@ public class EditProfileActivity extends AppCompatActivity {
     Button mBtnSpremiPodatke;
 
     private FirebaseUser user;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseUsers;
+    private DatabaseReference mDatabaseRezervacije;
     private String userID;
 
-    String ime;
-    String prezime;
-    String email;
+    String updatedIme, updatedPrezime, updatedEmail;
+    String ime, prezime;
+    String[] imeSplit;
+    String[] prezimeSplit;
+    String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,15 @@ public class EditProfileActivity extends AppCompatActivity {
         //BUTTONS
         mBtnSpremiPodatke = findViewById(R.id.btnSpremiProfil);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            ime = extras.getString("ime");
+            prezime = extras.getString("prezime");
+
+           imeSplit = ime.split(":");
+           prezimeSplit = prezime.split(":");
+        }
+
         getUser();
 
         mBtnSpremiPodatke.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +78,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 updateUser();
+                finish();
 
             }
         });
@@ -71,10 +86,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void getUser(){
         user = FirebaseAuth.getInstance().getCurrentUser();
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
 
-        mDatabase.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseUsers.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -101,42 +116,77 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void updateUser(){
 
-        ime = mIme.getText().toString();
-        prezime = mPrezime.getText().toString();
-        email = mEmail.getText().toString();
+        updatedIme = mIme.getText().toString();
+        updatedPrezime = mPrezime.getText().toString();
+        updatedEmail = mEmail.getText().toString();
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference("Users");
+        mDatabaseRezervacije = FirebaseDatabase.getInstance().getReference("Rezervacije");
         userID = user.getUid();
 
         HashMap updatedUser = new HashMap();
-        updatedUser.put("ime", ime);
-        updatedUser.put("prezime", prezime);
-        updatedUser.put("email", email);
+        updatedUser.put("ime", updatedIme);
+        updatedUser.put("prezime", updatedPrezime);
+        updatedUser.put("email", updatedEmail);
 
-        if (ime.isEmpty()){
+        if (updatedIme.isEmpty()){
             mIme.setError("Ne moze biti prazno");
             return;
         }
 
-        if (prezime.isEmpty()){
+        if (updatedPrezime.isEmpty()){
             mPrezime.setError("Ne moze biti prazno");
             return;
         }
 
-        if (email.isEmpty()){
+        if (updatedEmail.isEmpty()){
             mEmail.setError("Email je obavezan!");
             return;
         }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(updatedEmail).matches()){
             mEmail.setError("Unesite valjani email");
             return;
         }
 
+        mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.exists()){
+
+                    for (DataSnapshot ds : snapshot.getChildren()){
+
+                        if (ds.child("ime").getValue(String.class).equals(imeSplit[1].trim()) && ds.child("prezime").getValue(String.class).equals(prezimeSplit[1].trim())){
+
+                            key = ds.getKey();
+
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Rezervacije").child(key);
+                            Map<String, Object> updates = new HashMap<String,Object>();
+
+                            updates.put("ime", updatedIme);
+                            updates.put("prezime", updatedPrezime);
+
+                            ref.updateChildren(updates);
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         //PROMJENA IMENA, PREZIMENA i E-MAIL
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
-        mDatabase.child(userID).updateChildren(updatedUser).addOnCompleteListener(new OnCompleteListener() {
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference("Users");
+        mDatabaseUsers.child(userID).updateChildren(updatedUser).addOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {
 
@@ -151,7 +201,7 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
         //PROMJENA E-MAIL
-        user.updateEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
+        user.updateEmail(updatedEmail).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
 

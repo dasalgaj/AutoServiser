@@ -9,6 +9,7 @@ import com.example.testapp.R;
 import com.example.testapp.adapter.ViewPagerAdapterHome;
 import com.example.testapp.adapter.ViewPagerAdapterHomeServiser;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivityServiser extends AppCompatActivity {
 
@@ -55,5 +56,12 @@ public class HomeActivityServiser extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        FirebaseAuth.getInstance().signOut();
     }
 }

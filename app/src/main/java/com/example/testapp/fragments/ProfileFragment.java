@@ -39,6 +39,7 @@ public class ProfileFragment extends Fragment {
     TextView mPrezime;
     TextView mEmail;
     Button mBtnUredi;
+    Button mBtnOdjava;
 
     private FirebaseUser user;
     private DatabaseReference mDatabase;
@@ -65,18 +66,27 @@ public class ProfileFragment extends Fragment {
 
         //BUTTONS
         mBtnUredi = view.findViewById(R.id.btnEditProfile);
-
-
+        mBtnOdjava = view.findViewById(R.id.btnOdjava);
 
         mBtnUredi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getContext(), EditProfileActivity.class));
+                Intent i = new Intent(getActivity(), EditProfileActivity.class);
+                i.putExtra("ime", mIme.getText().toString());
+                i.putExtra("prezime", mPrezime.getText().toString());
+                startActivity(i);
 
             }
         });
 
+        mBtnOdjava.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                getActivity().finish();
+            }
+        });
 
         return view;
     }
