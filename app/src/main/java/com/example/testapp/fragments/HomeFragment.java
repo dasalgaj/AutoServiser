@@ -3,6 +3,7 @@ package com.example.testapp.fragments;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -51,6 +52,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
@@ -79,6 +81,8 @@ public class HomeFragment extends Fragment {
 
     String userID, key;
 
+    Context context;
+
     public LoginListener loginListener;
 
     @Override
@@ -100,7 +104,7 @@ public class HomeFragment extends Fragment {
 
                         if (userProfile != null){
 
-                            mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
+                            mDatabaseRezervacije.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshotRezervacije) {
 
@@ -401,72 +405,6 @@ public class HomeFragment extends Fragment {
 
                                             }
 
-                                            //KADA JE REZERVACIJA OBAVLJENA
-                                            mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                                    for (DataSnapshot ds : snapshot.getChildren()){
-
-                                                        if (userProfile.rezervacijaID == dsRezervacije.child("rezervacijaID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("ObavljenoN")){
-
-                                                            if (dsRezervacije.child("servisID").getValue(int.class) == 1){
-
-                                                                btnQRCodeNissan.setVisibility(View.INVISIBLE);
-                                                                btnRezervacijaNissan.setVisibility(View.VISIBLE);
-                                                                tvNissan.setText("Rezervacija");
-
-                                                                sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
-
-                                                                updateStatus(dsRezervacije.getKey());
-
-                                                            }
-                                                            else if (dsRezervacije.child("servisID").getValue(int.class) == 2){
-
-                                                                btnQRCodeCitroen.setVisibility(View.INVISIBLE);
-                                                                btnRezervacijaCitroen.setVisibility(View.VISIBLE);
-                                                                tvCitroen.setText("Rezervacija");
-
-                                                                sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
-
-                                                                updateStatus(dsRezervacije.getKey());
-
-                                                            }
-                                                            else if (dsRezervacije.child("servisID").getValue(int.class) == 3){
-
-                                                                btnQRCodeRenault.setVisibility(View.INVISIBLE);
-                                                                btnRezervacijaRenault.setVisibility(View.VISIBLE);
-                                                                tvRenault.setText("Rezervacija");
-
-                                                                sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
-
-                                                                updateStatus(dsRezervacije.getKey());
-
-                                                            }
-                                                            else if (dsRezervacije.child("servisID").getValue(int.class) == 4){
-
-                                                                btnQRCodeOpel.setVisibility(View.INVISIBLE);
-                                                                btnRezervacijaOpel.setVisibility(View.VISIBLE);
-                                                                tvOpel.setText("Rezervacija");
-
-                                                                sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
-
-                                                                updateStatus(dsRezervacije.getKey());
-
-                                                            }
-
-                                                        }
-
-                                                    }
-
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                                }
-                                            });
-
                                         }
 
                                     }
@@ -490,6 +428,89 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
+
+
+        mDatabaseUsers.child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshotUsers) {
+
+                User userProfile = snapshotUsers.getValue(User.class);
+
+                if (userProfile != null){
+
+                    mDatabaseRezervacije.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshotRezervacije) {
+
+                            //KADA JE REZERVACIJA OBAVLJENA
+
+                            for (DataSnapshot dsRezervacije : snapshotRezervacije.getChildren()) {
+
+                                if (userProfile.rezervacijaID == dsRezervacije.child("rezervacijaID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("ObavljenoN")) {
+
+                                    if (dsRezervacije.child("servisID").getValue(int.class) == 1) {
+
+                                        btnQRCodeNissan.setVisibility(View.INVISIBLE);
+                                        btnRezervacijaNissan.setVisibility(View.VISIBLE);
+                                        tvNissan.setText("Rezervacija");
+
+                                        sendOnChannel1(tvNissanServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+
+                                        updateStatus(dsRezervacije.getKey());
+
+                                    } else if (dsRezervacije.child("servisID").getValue(int.class) == 2) {
+
+                                        btnQRCodeCitroen.setVisibility(View.INVISIBLE);
+                                        btnRezervacijaCitroen.setVisibility(View.VISIBLE);
+                                        tvCitroen.setText("Rezervacija");
+
+                                        sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+
+                                        updateStatus(dsRezervacije.getKey());
+
+                                    } else if (dsRezervacije.child("servisID").getValue(int.class) == 3) {
+
+                                        btnQRCodeRenault.setVisibility(View.INVISIBLE);
+                                        btnRezervacijaRenault.setVisibility(View.VISIBLE);
+                                        tvRenault.setText("Rezervacija");
+
+                                        sendOnChannel1(tvRenaultServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+
+                                        updateStatus(dsRezervacije.getKey());
+
+                                    } else if (dsRezervacije.child("servisID").getValue(int.class) == 4) {
+
+                                        btnQRCodeOpel.setVisibility(View.INVISIBLE);
+                                        btnRezervacijaOpel.setVisibility(View.VISIBLE);
+                                        tvOpel.setText("Rezervacija");
+
+                                        sendOnChannel1(tvOpelServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+
+                                        updateStatus(dsRezervacije.getKey());
+
+                                    }
+
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     @Override
@@ -523,6 +544,8 @@ public class HomeFragment extends Fragment {
 
         //NOTIFICATION
         notificationManager = NotificationManagerCompat.from(getContext());
+
+        context = getActivity();
 
         mDatabaseServisi.addValueEventListener(new ValueEventListener() {
             @Override
@@ -676,7 +699,7 @@ public class HomeFragment extends Fragment {
 
     public void sendOnChannel1(String imeServisa, String tipServisa){
 
-        Notification notification = new NotificationCompat.Builder(getContext(), CHANNEL_1_ID)
+        Notification notification = new NotificationCompat.Builder(context, CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle(imeServisa)
                 .setContentText(tipServisa + " na vašem automobilu je obavljen")

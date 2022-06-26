@@ -102,7 +102,7 @@ public class PotvrdaRezervacijeActivity extends AppCompatActivity implements OnM
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                mDatabaseUsers.child(userID).addValueEventListener(new ValueEventListener() {
+                                mDatabaseUsers.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 

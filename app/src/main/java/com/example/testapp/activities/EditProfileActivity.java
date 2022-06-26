@@ -150,7 +150,7 @@ public class EditProfileActivity extends AppCompatActivity {
             return;
         }
 
-        mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
+        mDatabaseRezervacije.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

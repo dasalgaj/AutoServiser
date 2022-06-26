@@ -47,12 +47,7 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
     AutoCompleteTextView autoCompleteTextView;
 
     boolean provjera;
-    String tipServisa;
-    String datumServisa;
-    String vrijemeServisa;
-    String adresaServisa;
-    String imeServisa;
-    String radnoVrijeme;
+    String tipServisa, datumServisa, vrijemeServisa, adresaServisa, imeServisa, radnoVrijeme;
     long oibServisa;
     int servisID;
 
@@ -124,7 +119,8 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
 
                             for (DataSnapshot ds : snapshot.getChildren()){
 
-                                if (ds.child("datum").getValue(String.class).equals(datumServisa) && ds.child("vrijeme").getValue(String.class).equals(vrijemeServisa) && ds.child("servisID").getValue(Long.class) == servisID){
+                                if (ds.child("datum").getValue(String.class).equals(datumServisa) && ds.child("vrijeme").getValue(String.class).equals(vrijemeServisa)
+                                        && ds.child("servisID").getValue(Long.class) == servisID && (ds.child("status").getValue(String.class).equals("Na cekanju") || ds.child("status").getValue(String.class).equals("U tijeku"))){
 
                                     Toast.makeText(RezervacijaActivity.this, "Vrijeme je zauzeto", Toast.LENGTH_SHORT).show();
 

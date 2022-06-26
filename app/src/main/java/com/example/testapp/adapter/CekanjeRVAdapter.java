@@ -63,7 +63,7 @@ public class CekanjeRVAdapter extends RecyclerView.Adapter<CekanjeRVAdapter.View
             @Override
             public void onClick(View v) {
 
-                mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
+                mDatabaseRezervacije.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshotRezervacije) {
 
@@ -71,7 +71,9 @@ public class CekanjeRVAdapter extends RecyclerView.Adapter<CekanjeRVAdapter.View
 
                             for (DataSnapshot dsRezervacije : snapshotRezervacije.getChildren()){
 
-                                if (rezervacije.getRezervacijaID() == dsRezervacije.child("rezervacijaID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("U tijeku")){
+                                if (rezervacije.getRezervacijaID() == dsRezervacije.child("rezervacijaID").getValue(Long.class)
+                                        && dsRezervacije.child("status").getValue(String.class).equals("U tijeku")
+                                        && dsRezervacije.child("servisID").getValue(int.class) == rezervacije.servisID){
 
                                     key = dsRezervacije.getKey();
 

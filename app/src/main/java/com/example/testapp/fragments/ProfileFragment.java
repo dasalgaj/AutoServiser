@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.testapp.R;
 import com.example.testapp.activities.EditProfileActivity;
 import com.example.testapp.activities.HomeActivity;
+import com.example.testapp.activities.MainActivity;
 import com.example.testapp.listeners.LoginListener;
 import com.example.testapp.models.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,7 +85,10 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                getActivity().finish();
+
+                if (getActivity() != null) {
+                    getActivity().finish();
+                }
             }
         });
 

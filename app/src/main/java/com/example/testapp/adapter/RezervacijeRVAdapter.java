@@ -77,7 +77,9 @@ public class RezervacijeRVAdapter extends RecyclerView.Adapter<RezervacijeRVAdap
 
                             for (DataSnapshot dsRezervacije : snapshotRezervacije.getChildren()){
 
-                                if (rezervacije.getRezervacijaID() == dsRezervacije.child("rezervacijaID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("Na cekanju")){
+                                if (rezervacije.getRezervacijaID() == dsRezervacije.child("rezervacijaID").getValue(Long.class)
+                                        && dsRezervacije.child("status").getValue(String.class).equals("Na cekanju")
+                                        && dsRezervacije.child("servisID").getValue(int.class) == rezervacije.servisID){
 
                                     key = dsRezervacije.getKey();
 
