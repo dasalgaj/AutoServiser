@@ -69,7 +69,7 @@ public class RezervacijeRVAdapter extends RecyclerView.Adapter<RezervacijeRVAdap
             @Override
             public void onClick(View v) {
 
-                mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
+                mDatabaseRezervacije.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshotRezervacije) {
 
