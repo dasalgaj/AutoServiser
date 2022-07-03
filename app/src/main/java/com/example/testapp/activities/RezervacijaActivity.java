@@ -111,7 +111,7 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
                 radnaVremena[0] = radnaVremena[0].trim();
                 radnaVremena[1] = radnaVremena[1].trim();
 
-                mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
+                mDatabaseRezervacije.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -125,6 +125,7 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
                                     Toast.makeText(RezervacijaActivity.this, "Vrijeme je zauzeto", Toast.LENGTH_SHORT).show();
 
                                     provjera = false;
+                                    break;
 
                                 }
                                 else{
@@ -159,6 +160,19 @@ public class RezervacijaActivity extends AppCompatActivity implements DatePicker
                                 }
 
                             }
+
+                        }
+                        else{
+
+                            Intent i = new Intent(RezervacijaActivity.this, PotvrdaRezervacijeActivity.class);
+                            i.putExtra("tip", tipServisa);
+                            i.putExtra("datum", datumServisa);
+                            i.putExtra("vrijeme", vrijemeServisa);
+                            i.putExtra("adresa", adresaServisa);
+                            i.putExtra("imeServisa", imeServisa);
+                            i.putExtra("servisID", servisID);
+                            i.putExtra("oibServisa", oibServisa);
+                            startActivity(i);
 
                         }
 

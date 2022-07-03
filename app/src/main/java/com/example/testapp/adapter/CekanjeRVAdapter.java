@@ -89,8 +89,10 @@ public class CekanjeRVAdapter extends RecyclerView.Adapter<CekanjeRVAdapter.View
                             }
 
                             if (getItemCount() == 0){
-                                tvEmpty.setVisibility(View.VISIBLE);
                                 tvEmpty.setText("Trenutno nema rezervacija u tijeku");
+                            }
+                            else{
+                                tvEmpty.setVisibility(View.VISIBLE);
                             }
 
                         }

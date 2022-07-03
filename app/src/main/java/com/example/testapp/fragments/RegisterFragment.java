@@ -160,6 +160,7 @@ public class RegisterFragment extends Fragment {
                                         mIme.getText().clear();
                                         mPrezime.getText().clear();
                                         mEmail.getText().clear();
+                                        mMobitel.getText().clear();
                                         mLozinka.getText().clear();
                                     }
                                     else{
@@ -176,6 +177,17 @@ public class RegisterFragment extends Fragment {
                     }
                 });
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mIme.getText().clear();
+        mPrezime.getText().clear();
+        mEmail.getText().clear();
+        mMobitel.getText().clear();
+        mLozinka.getText().clear();
     }
 
 }
