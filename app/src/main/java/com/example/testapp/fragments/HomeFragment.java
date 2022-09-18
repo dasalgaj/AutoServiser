@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
 
                         if (userProfile != null){
 
-                            mDatabaseRezervacije.addListenerForSingleValueEvent(new ValueEventListener() {
+                            mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshotRezervacije) {
 
@@ -438,7 +438,7 @@ public class HomeFragment extends Fragment {
 
                 if (userProfile != null){
 
-                    mDatabaseRezervacije.addListenerForSingleValueEvent(new ValueEventListener() {
+                    mDatabaseRezervacije.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshotRezervacije) {
 
@@ -446,7 +446,7 @@ public class HomeFragment extends Fragment {
 
                             for (DataSnapshot dsRezervacije : snapshotRezervacije.getChildren()) {
 
-                                if (userProfile.rezervacijaID == dsRezervacije.child("rezervacijaID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("ObavljenoN")) {
+                                if (userProfile.rezervacijaID == dsRezervacije.child("rezervacijaID").getValue(Long.class) && dsRezervacije.child("status").getValue(String.class).equals("Obavljeno")) {
 
                                     if (dsRezervacije.child("servisID").getValue(int.class) == 1) {
 
@@ -454,7 +454,7 @@ public class HomeFragment extends Fragment {
                                         btnRezervacijaNissan.setVisibility(View.VISIBLE);
                                         tvNissan.setText("Rezervacija");
 
-                                        sendOnChannel1(tvNissanServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+                                        //sendOnChannel1(tvNissanServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
 
                                         updateStatus(dsRezervacije.getKey());
 
@@ -464,7 +464,7 @@ public class HomeFragment extends Fragment {
                                         btnRezervacijaCitroen.setVisibility(View.VISIBLE);
                                         tvCitroen.setText("Rezervacija");
 
-                                        sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+                                        //sendOnChannel1(tvCitroenServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
 
                                         updateStatus(dsRezervacije.getKey());
 
@@ -474,7 +474,7 @@ public class HomeFragment extends Fragment {
                                         btnRezervacijaRenault.setVisibility(View.VISIBLE);
                                         tvRenault.setText("Rezervacija");
 
-                                        sendOnChannel1(tvRenaultServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+                                        //sendOnChannel1(tvRenaultServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
 
                                         updateStatus(dsRezervacije.getKey());
 
@@ -484,7 +484,7 @@ public class HomeFragment extends Fragment {
                                         btnRezervacijaOpel.setVisibility(View.VISIBLE);
                                         tvOpel.setText("Rezervacija");
 
-                                        sendOnChannel1(tvOpelServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
+                                        //sendOnChannel1(tvOpelServis.getText().toString(), dsRezervacije.child("tip").getValue(String.class));
 
                                         updateStatus(dsRezervacije.getKey());
 
@@ -697,7 +697,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void sendOnChannel1(String imeServisa, String tipServisa){
+    /*public void sendOnChannel1(String imeServisa, String tipServisa){
 
         Notification notification = new NotificationCompat.Builder(context, CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_launcher_background)
@@ -709,7 +709,7 @@ public class HomeFragment extends Fragment {
 
         notificationManager.notify(1, notification);
 
-    }
+    }*/
 
     public void updateStatus(String key){
 

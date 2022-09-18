@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapp.R;
+import com.example.testapp.models.FCMSend;
 import com.example.testapp.models.Rezervacija;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -80,7 +81,7 @@ public class CekanjeRVAdapter extends RecyclerView.Adapter<CekanjeRVAdapter.View
                                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Rezervacije").child(key);
                                     Map<String, Object> updates = new HashMap<String,Object>();
 
-                                    updates.put("status", "ObavljenoN");
+                                    updates.put("status", "Obavljeno");
 
                                     ref.updateChildren(updates);
 
@@ -104,6 +105,15 @@ public class CekanjeRVAdapter extends RecyclerView.Adapter<CekanjeRVAdapter.View
 
                     }
                 });
+
+                String title = "Auto Servis";
+                String message = "Vaš servis je obavljen";
+                FCMSend.pushNotification(
+                        context,
+                        "eNEwvCzyQ2a1Fh1b1SiS-k:APA91bGPgl9wufItlnTux7b59acKFN31ZbyoEL7x_ujYyVstIW-_ehVWz_r1xelzo3v6psOdlZWV8xuguzsFQMwdgwcmppvjbIW-3HV_e6feYh_XRJOlDIOU86YGUyqHi5rxTfwd5BYu",
+                        title,
+                        message
+                );
 
             }
         });

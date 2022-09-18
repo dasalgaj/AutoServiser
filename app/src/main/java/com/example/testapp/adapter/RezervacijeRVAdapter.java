@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapp.R;
+import com.example.testapp.models.FCMSend;
 import com.example.testapp.models.Rezervacija;
 import com.example.testapp.models.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -107,6 +108,15 @@ public class RezervacijeRVAdapter extends RecyclerView.Adapter<RezervacijeRVAdap
 
                     }
                 });
+
+                String title = "Auto Servis";
+                String message = "Vaš servis je prihvaćen";
+                FCMSend.pushNotification(
+                        context,
+                        "eNEwvCzyQ2a1Fh1b1SiS-k:APA91bGPgl9wufItlnTux7b59acKFN31ZbyoEL7x_ujYyVstIW-_ehVWz_r1xelzo3v6psOdlZWV8xuguzsFQMwdgwcmppvjbIW-3HV_e6feYh_XRJOlDIOU86YGUyqHi5rxTfwd5BYu",
+                        title,
+                        message
+                );
 
             }
         });
